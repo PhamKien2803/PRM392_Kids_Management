@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Sakura School</string>
+    <string name="login_title">Đăng nhập Sakura School</string>
+    <string name="welcome_message">Chào mừng trở lại!</string>
+    <string name="username_hint">Tên đăng nhập hoặc Email</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="login_button">Đăng nhập</string>
+    <string name="forget_password">Quên mật khẩu?</string>
+    <string name="no_account_prompt">Chưa có tài khoản?</string>
+    <string name="sign_up_prompt">Đăng ký ngay</string>
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E3F2FD"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="➕ Thêm lớp mới"
+        android:textSize="20sp"
+        android:textColor="#0D47A1"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/edtClassName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên lớp (VD: Lá 1)"
+        android:backgroundTint="#2196F3"
+        android:padding="12dp"
+        android:textColor="#000000"
+        android:textColorHint="#9E9E9E"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/edtTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên giáo viên phụ trách"
+        android:backgroundTint="#2196F3"
+        android:padding="12dp"
+        android:textColor="#000000"
+        android:textColorHint="#9E9E9E"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnAddClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tạo lớp học"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2196F3"/>
+
+    <!-- Nút quay lại -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🔙 Quay lại"
+        android:layout_marginTop="12dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2196F3" />
+</LinearLayout>

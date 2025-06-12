@@ -1,0 +1,27 @@
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorPrimaryLight">#BBDEFB</color>
+    <color name="colorAccent">#03A9F4</color>
+
+    <color name="colorSecondary">#00BCD4</color>
+    <color name="colorSecondaryDark">#0097A7</color>
+    <color name="colorSecondaryLight">#B2EBF2</color>
+
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorSurface">#F5F5F5</color>
+
+    <color name="textColorPrimary">#0D47A1</color>
+    <color name="textColorSecondary">#666666</color>
+    <color name="textColorOnPrimary">#FFFFFF</color>
+    <color name="textColorHint">#9E9E9E</color>
+
+    <color name="buttonColor">#2196F3</color>
+    <color name="buttonTextColor">#FFFFFF</color>
+
+    <color name="colorError">#F44336</color>
+    <color name="colorSuccess">#4CAF50</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+</resources>
