@@ -15,7 +15,7 @@ public class AccountDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ROLE = "role";
     public static final String COLUMN_TEACHER_ID = "teacherId";
     public static final String COLUMN_PARENT_ID = "parentId";
-
+    private final Context context;
     private static final String CREATE_ACCOUNT_TABLE =
             "CREATE TABLE " + TABLE_ACCOUNT + " (" +
                     COLUMN_ACCOUNT_ID + " INTEGER PRIMARY KEY, " +
@@ -31,6 +31,11 @@ public class AccountDatabaseHelper extends SQLiteOpenHelper {
 
     public AccountDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @Override

@@ -1,18 +1,17 @@
 package com.example.project_prm392_kidmanagement.Entity;
 
-import java.util.Date;
 
 public class Schedule {
     private String scheduleId;
     private String activityName;
-    private Date timeStart;
-    private Date timeEnd;
-    private Date timeDate;
+    private String timeStart;
+    private String timeEnd;
+    private String timeDate;
 
     public Schedule() {
     }
 
-    public Schedule(String scheduleId, String activityName, Date timeStart, Date timeEnd, Date timeDate) {
+    public Schedule(String scheduleId, String activityName, String timeStart, String timeEnd, String timeDate) {
         this.scheduleId = scheduleId;
         this.activityName = activityName;
         this.timeStart = timeStart;
@@ -36,27 +35,27 @@ public class Schedule {
         this.activityName = activityName;
     }
 
-    public Date getTimeStart() {
+    public String getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(Date timeStart) {
+    public void setTimeStart(String timeStart) {
         this.timeStart = timeStart;
     }
 
-    public Date getTimeEnd() {
+    public String getTimeEnd() {
         return timeEnd;
     }
 
-    public void setTimeEnd(Date timeEnd) {
+    public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
     }
 
-    public Date getTimeDate() {
+    public String getTimeDate() {
         return timeDate;
     }
 
-    public void setTimeDate(Date timeDate) {
+    public void setTimeDate(String timeDate) {
         this.timeDate = timeDate;
     }
 

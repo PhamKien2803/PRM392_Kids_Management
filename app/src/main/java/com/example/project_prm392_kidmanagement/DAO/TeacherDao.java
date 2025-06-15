@@ -1,35 +1,104 @@
 package com.example.project_prm392_kidmanagement.DAO;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.project_prm392_kidmanagement.DB.TeacherDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.Teacher;
+import com.example.project_prm392_kidmanagement.Mapper.TeacherMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeacherDao {
-    private final SQLiteDatabase db;
+    private final TeacherDatabaseHelper dbHelper;
 
     public TeacherDao(Context context) {
-        TeacherDatabaseHelper helper = new TeacherDatabaseHelper(context);
-        db = helper.getReadableDatabase();
+        dbHelper = new TeacherDatabaseHelper(context);
+    }
+
+    public long insert(Teacher teacher) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("teacherId", teacher.getTeacherId());
+        values.put("fullName", teacher.getFullName());
+        values.put("address", teacher.getAddress());
+        values.put("phone", teacher.getPhone());
+        values.put("dob", teacher.getDob());
+
+        return db.insert(TeacherDatabaseHelper.TABLE_TEACHER, null, values);
+    }
+
+    public boolean update(Teacher teacher) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("fullName", teacher.getFullName());
+        values.put("address", teacher.getAddress());
+        values.put("phone", teacher.getPhone());
+        values.put("dob", teacher.getDob());
+
+        int rowsAffected = db.update(
+                TeacherDatabaseHelper.TABLE_TEACHER,
+                values,
+                "teacherId = ?",
+                new String[]{teacher.getTeacherId()}
+        );
+
+        return rowsAffected > 0;
+    }
+
+    public boolean delete(String teacherId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsDeleted = db.delete(
+                TeacherDatabaseHelper.TABLE_TEACHER,
+                "teacherId = ?",
+                new String[]{teacherId}
+        );
+        return rowsDeleted > 0;
     }
 
     public Teacher getById(String id) {
-        Cursor cursor = db.query("teachers", null, "teacherId = ?", new String[]{id}, null, null, null);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                TeacherDatabaseHelper.TABLE_TEACHER,
+                null,
+                "teacherId = ?",
+                new String[]{id},
+                null,
+                null,
+                null
+        );
+
+        Teacher teacher = null;
         if (cursor.moveToFirst()) {
-            Teacher teacher = new Teacher(
-                    cursor.getString(cursor.getColumnIndexOrThrow("teacherId")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("fullName")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("address")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("phone")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("dob"))
-            );
-            cursor.close();
-            return teacher;
+            teacher = TeacherMapper.fromCursor(cursor);
         }
+
         cursor.close();
-        return null;
+        return teacher;
+    }
+
+    public List<Teacher> getAll() {
+        List<Teacher> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                TeacherDatabaseHelper.TABLE_TEACHER,
+                null,
+                null,
+                null,
+                null,
+                null,
+                "fullName ASC"
+        );
+
+        while (cursor.moveToNext()) {
+            list.add(TeacherMapper.fromCursor(cursor));
+        }
+
+        cursor.close();
+        return list;
     }
 }
-
