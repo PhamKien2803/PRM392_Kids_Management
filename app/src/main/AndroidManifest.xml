@@ -46,5 +46,12 @@
         <activity
             android:name=".ParentHomeManagerActivity"
             android:exported="false" />
+
+        <activity android:name=".TeacherClassManagerActivity" />
+        <activity android:name=".TeacherViewTimeTableManagerActivity" />
+        <activity android:name=".TeacherScheduleManagerActivity" />
+        <activity android:name=".TeacherEditClassManagerActivity" />
+        <activity android:name=".TeacherAddClassManagerActivity" />
+
     </application>
 </manifest>

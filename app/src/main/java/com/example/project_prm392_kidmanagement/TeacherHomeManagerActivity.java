@@ -8,13 +8,12 @@ import android.widget.Toast;
 
 import com.example.project_prm392_kidmanagement.DAO.TeacherDao;
 import com.example.project_prm392_kidmanagement.Entity.Teacher;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class TeacherHomeManagerActivity extends AppCompatActivity {
 
     private TextView tvTeacherName, tvTeacherClass;
-    private Button btnViewTimetable, btnManageSchedule, btnDeleteClass, btnAddClass, btnEditClass, btnLogout;
+    private Button btnViewTimetable, btnManageSchedule, btnManageClass, btnLogout;
 
     private TeacherDao teacherDao;
 
@@ -37,9 +36,7 @@ public class TeacherHomeManagerActivity extends AppCompatActivity {
         tvTeacherClass = findViewById(R.id.tvTeacherClass);
         btnViewTimetable = findViewById(R.id.btnViewTimetable);
         btnManageSchedule = findViewById(R.id.btnManageSchedule);
-        btnDeleteClass = findViewById(R.id.btnDeleteClass);
-        btnAddClass = findViewById(R.id.btnAddClass);
-        btnEditClass = findViewById(R.id.btnEditClass);
+        btnManageClass = findViewById(R.id.btnManageClass);
         btnLogout = findViewById(R.id.btnLogout);
 
         if (teacher != null) {
@@ -50,9 +47,27 @@ public class TeacherHomeManagerActivity extends AppCompatActivity {
             tvTeacherClass.setText("📚 Lớp phụ trách: -");
         }
 
+        btnViewTimetable.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TeacherViewTimeTableManagerActivity.class);
+            intent.putExtra("teacherId", teacherId);
+            startActivity(intent);
+        });
+
+        btnManageSchedule.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TeacherScheduleManagerActivity.class);
+            intent.putExtra("teacherId", teacherId);
+            startActivity(intent);
+        });
+
+        btnManageClass.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TeacherClassManagerActivity.class);
+            intent.putExtra("teacherId", teacherId);
+            startActivity(intent);
+        });
+
+
         btnLogout.setOnClickListener(view -> {
             Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(this, AccountManagerActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
