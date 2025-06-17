@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.project_prm392_kidmanagement.DB.TeacherDatabaseHelper;
+import com.example.project_prm392_kidmanagement.DB.SqlDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.Teacher;
 import com.example.project_prm392_kidmanagement.Mapper.TeacherMapper;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherDao {
-    private final TeacherDatabaseHelper dbHelper;
+    private final SqlDatabaseHelper dbHelper;
 
     public TeacherDao(Context context) {
-        dbHelper = new TeacherDatabaseHelper(context);
+        dbHelper = new SqlDatabaseHelper(context);
     }
 
     public long insert(Teacher teacher) {
@@ -28,7 +28,7 @@ public class TeacherDao {
         values.put("phone", teacher.getPhone());
         values.put("dob", teacher.getDob());
 
-        return db.insert(TeacherDatabaseHelper.TABLE_TEACHER, null, values);
+        return db.insert(SqlDatabaseHelper.TABLE_TEACHER, null, values);
     }
 
     public boolean update(Teacher teacher) {
@@ -40,7 +40,7 @@ public class TeacherDao {
         values.put("dob", teacher.getDob());
 
         int rowsAffected = db.update(
-                TeacherDatabaseHelper.TABLE_TEACHER,
+                SqlDatabaseHelper.TABLE_TEACHER,
                 values,
                 "teacherId = ?",
                 new String[]{teacher.getTeacherId()}
@@ -52,7 +52,7 @@ public class TeacherDao {
     public boolean delete(String teacherId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rowsDeleted = db.delete(
-                TeacherDatabaseHelper.TABLE_TEACHER,
+                SqlDatabaseHelper.TABLE_TEACHER,
                 "teacherId = ?",
                 new String[]{teacherId}
         );
@@ -62,7 +62,7 @@ public class TeacherDao {
     public Teacher getById(String id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                TeacherDatabaseHelper.TABLE_TEACHER,
+                SqlDatabaseHelper.TABLE_TEACHER,
                 null,
                 "teacherId = ?",
                 new String[]{id},
@@ -85,7 +85,7 @@ public class TeacherDao {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
-                TeacherDatabaseHelper.TABLE_TEACHER,
+                SqlDatabaseHelper.TABLE_TEACHER,
                 null,
                 null,
                 null,

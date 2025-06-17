@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.project_prm392_kidmanagement.DB.SchedulesToClassDatabaseHelper;
+import com.example.project_prm392_kidmanagement.DB.SqlDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.SchedulesToClass;
 import com.example.project_prm392_kidmanagement.Mapper.ScheduleToClassMapper;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleToClassDao {
-    private final SchedulesToClassDatabaseHelper dbHelper;
+    private final SqlDatabaseHelper dbHelper;
 
     public ScheduleToClassDao(Context context) {
-        dbHelper = new SchedulesToClassDatabaseHelper(context);
+        dbHelper = new SqlDatabaseHelper(context);
     }
 
     public long insert(SchedulesToClass obj) {
@@ -26,7 +26,7 @@ public class ScheduleToClassDao {
         values.put("scheduleId", obj.getScheduleId());
         values.put("classId", obj.getClassId());
 
-        return db.insert(SchedulesToClassDatabaseHelper.TABLE_SCHEDULES_TO_CLASS, null, values);
+        return db.insert(SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS, null, values);
     }
 
     public boolean update(SchedulesToClass obj) {
@@ -36,7 +36,7 @@ public class ScheduleToClassDao {
         values.put("classId", obj.getClassId());
 
         int rows = db.update(
-                SchedulesToClassDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
+                SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
                 values,
                 "scheduleClassID = ?",
                 new String[]{String.valueOf(obj.getScheduleClassID())}
@@ -47,7 +47,7 @@ public class ScheduleToClassDao {
     public boolean delete(int scheduleClassID) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows = db.delete(
-                SchedulesToClassDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
+                SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
                 "scheduleClassID = ?",
                 new String[]{String.valueOf(scheduleClassID)}
         );
@@ -57,7 +57,7 @@ public class ScheduleToClassDao {
     public SchedulesToClass getById(int id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                SchedulesToClassDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
+                SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
                 null,
                 "scheduleClassID = ?",
                 new String[]{String.valueOf(id)},
@@ -76,7 +76,7 @@ public class ScheduleToClassDao {
         List<SchedulesToClass> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                SchedulesToClassDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
+                SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
                 null,
                 null,
                 null,

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.project_prm392_kidmanagement.DB.ScheduleDatabaseHelper;
+import com.example.project_prm392_kidmanagement.DB.SqlDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.Schedule;
 import com.example.project_prm392_kidmanagement.Mapper.ScheduleMapper;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleDao {
-    private final ScheduleDatabaseHelper dbHelper;
+    private final SqlDatabaseHelper dbHelper;
 
     public ScheduleDao(Context context) {
-        dbHelper = new ScheduleDatabaseHelper(context);
+        dbHelper = new SqlDatabaseHelper(context);
     }
 
     public long insert(Schedule schedule) {
@@ -28,7 +28,7 @@ public class ScheduleDao {
         values.put("timeEnd", schedule.getTimeEnd());
         values.put("timeDate", schedule.getTimeDate());
 
-        return db.insert(ScheduleDatabaseHelper.TABLE_SCHEDULE, null, values);
+        return db.insert(SqlDatabaseHelper.TABLE_SCHEDULE, null, values);
     }
 
     public boolean update(Schedule schedule) {
@@ -40,7 +40,7 @@ public class ScheduleDao {
         values.put("timeDate", schedule.getTimeDate());
 
         int rowsAffected = db.update(
-                ScheduleDatabaseHelper.TABLE_SCHEDULE,
+                SqlDatabaseHelper.TABLE_SCHEDULE,
                 values,
                 "scheduleId = ?",
                 new String[]{schedule.getScheduleId()}
@@ -52,7 +52,7 @@ public class ScheduleDao {
     public boolean delete(String scheduleId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows = db.delete(
-                ScheduleDatabaseHelper.TABLE_SCHEDULE,
+                SqlDatabaseHelper.TABLE_SCHEDULE,
                 "scheduleId = ?",
                 new String[]{scheduleId}
         );
@@ -62,7 +62,7 @@ public class ScheduleDao {
     public Schedule getById(String id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ScheduleDatabaseHelper.TABLE_SCHEDULE,
+                SqlDatabaseHelper.TABLE_SCHEDULE,
                 null,
                 "scheduleId = ?",
                 new String[]{id},
@@ -85,7 +85,7 @@ public class ScheduleDao {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
-                ScheduleDatabaseHelper.TABLE_SCHEDULE,
+                SqlDatabaseHelper.TABLE_SCHEDULE,
                 null,
                 null,
                 null,

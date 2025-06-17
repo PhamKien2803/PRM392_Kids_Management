@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.project_prm392_kidmanagement.DB.ClassDatabaseHelper;
+import com.example.project_prm392_kidmanagement.DB.SqlDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.Class;
 import com.example.project_prm392_kidmanagement.Mapper.ClassMapper;
 
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassDao {
-    private final ClassDatabaseHelper dbHelper;
+    private final SqlDatabaseHelper dbHelper;
     private final Context context;
 
     public ClassDao(Context context) {
         this.context = context;
-        this.dbHelper = new ClassDatabaseHelper(context);
+        this.dbHelper = new SqlDatabaseHelper(context);
     }
 
     public long insert(Class classroom) {
@@ -30,7 +30,7 @@ public class ClassDao {
         values.put("teacherId", classroom.getTeacherId() != null ? classroom.getTeacherId().getTeacherId() : null);
         values.put("scheduleId", classroom.getScheduleId() != null ? classroom.getScheduleId().getScheduleId() : null);
 
-        return db.insert(ClassDatabaseHelper.TABLE_CLASS, null, values);
+        return db.insert(SqlDatabaseHelper.TABLE_CLASS, null, values);
     }
 
     public boolean update(Class classroom) {
@@ -42,7 +42,7 @@ public class ClassDao {
         values.put("scheduleId", classroom.getScheduleId() != null ? classroom.getScheduleId().getScheduleId() : null);
 
         int rowsAffected = db.update(
-                ClassDatabaseHelper.TABLE_CLASS,
+                SqlDatabaseHelper.TABLE_CLASS,
                 values,
                 "classId = ?",
                 new String[]{classroom.getClassId()}
@@ -53,7 +53,7 @@ public class ClassDao {
     public boolean delete(String classId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows = db.delete(
-                ClassDatabaseHelper.TABLE_CLASS,
+                SqlDatabaseHelper.TABLE_CLASS,
                 "classId = ?",
                 new String[]{classId}
         );
@@ -63,7 +63,7 @@ public class ClassDao {
     public Class getById(String id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ClassDatabaseHelper.TABLE_CLASS,
+                SqlDatabaseHelper.TABLE_CLASS,
                 null,
                 "classId = ?",
                 new String[]{id},
@@ -86,7 +86,7 @@ public class ClassDao {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
-                ClassDatabaseHelper.TABLE_CLASS,
+                SqlDatabaseHelper.TABLE_CLASS,
                 null,
                 null,
                 null,

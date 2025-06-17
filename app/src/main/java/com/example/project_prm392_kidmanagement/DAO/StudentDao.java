@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.project_prm392_kidmanagement.DB.StudentDatabaseHelper;
+import com.example.project_prm392_kidmanagement.DB.SqlDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.Student;
 import com.example.project_prm392_kidmanagement.Mapper.StudentMapper;
 
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDao {
-    private final StudentDatabaseHelper dbHelper;
+    private final SqlDatabaseHelper dbHelper;
     private final Context context;
 
     public StudentDao(Context context) {
         this.context = context;
-        this.dbHelper = new StudentDatabaseHelper(context);
+        this.dbHelper = new SqlDatabaseHelper(context);
     }
 
     public long insert(Student student) {
@@ -31,7 +31,7 @@ public class StudentDao {
         values.put("parentId", student.getParentId() != null ? student.getParentId().getParentId() : null);
         values.put("classId", student.getClassId() != null ? student.getClassId().getClassId() : null);
 
-        return db.insert(StudentDatabaseHelper.TABLE_STUDENT, null, values);
+        return db.insert(SqlDatabaseHelper.TABLE_STUDENT, null, values);
     }
 
     public boolean update(Student student) {
@@ -44,7 +44,7 @@ public class StudentDao {
         values.put("classId", student.getClassId() != null ? student.getClassId().getClassId() : null);
 
         int rowsAffected = db.update(
-                StudentDatabaseHelper.TABLE_STUDENT,
+                SqlDatabaseHelper.TABLE_STUDENT,
                 values,
                 "studentId = ?",
                 new String[]{student.getStudentId()}
@@ -55,7 +55,7 @@ public class StudentDao {
     public boolean delete(String studentId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows = db.delete(
-                StudentDatabaseHelper.TABLE_STUDENT,
+                SqlDatabaseHelper.TABLE_STUDENT,
                 "studentId = ?",
                 new String[]{studentId}
         );
@@ -65,7 +65,7 @@ public class StudentDao {
     public Student getById(String id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                StudentDatabaseHelper.TABLE_STUDENT,
+                SqlDatabaseHelper.TABLE_STUDENT,
                 null,
                 "studentId = ?",
                 new String[]{id},
@@ -88,7 +88,7 @@ public class StudentDao {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
-                StudentDatabaseHelper.TABLE_STUDENT,
+                SqlDatabaseHelper.TABLE_STUDENT,
                 null,
                 null,
                 null,

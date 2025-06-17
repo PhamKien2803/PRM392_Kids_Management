@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.project_prm392_kidmanagement.DB.ParentDatabaseHelper;
+import com.example.project_prm392_kidmanagement.DB.SqlDatabaseHelper;
 import com.example.project_prm392_kidmanagement.Entity.Parent;
 import com.example.project_prm392_kidmanagement.Mapper.ParentMapper;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParentDao {
-    private final ParentDatabaseHelper dbHelper;
+    private final SqlDatabaseHelper dbHelper;
 
     public ParentDao(Context context) {
-        dbHelper = new ParentDatabaseHelper(context);
+        dbHelper = new SqlDatabaseHelper(context);
     }
 
     public long insert(Parent parent) {
@@ -28,7 +28,7 @@ public class ParentDao {
         values.put("phone", parent.getPhone());
         values.put("dob", parent.getDob());
 
-        return db.insert(ParentDatabaseHelper.TABLE_PARENT, null, values);
+        return db.insert(SqlDatabaseHelper.TABLE_PARENT, null, values);
     }
 
     public boolean update(Parent parent) {
@@ -40,7 +40,7 @@ public class ParentDao {
         values.put("dob", parent.getDob());
 
         int rows = db.update(
-                ParentDatabaseHelper.TABLE_PARENT,
+                SqlDatabaseHelper.TABLE_PARENT,
                 values,
                 "parentId = ?",
                 new String[]{parent.getParentId()}
@@ -52,7 +52,7 @@ public class ParentDao {
     public boolean delete(String parentId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows = db.delete(
-                ParentDatabaseHelper.TABLE_PARENT,
+                SqlDatabaseHelper.TABLE_PARENT,
                 "parentId = ?",
                 new String[]{parentId}
         );
@@ -62,7 +62,7 @@ public class ParentDao {
     public Parent getById(String id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ParentDatabaseHelper.TABLE_PARENT,
+                SqlDatabaseHelper.TABLE_PARENT,
                 null,
                 "parentId = ?",
                 new String[]{id},
@@ -83,7 +83,7 @@ public class ParentDao {
         List<Parent> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
-                ParentDatabaseHelper.TABLE_PARENT,
+                SqlDatabaseHelper.TABLE_PARENT,
                 null,
                 null,
                 null,
