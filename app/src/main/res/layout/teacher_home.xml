@@ -21,6 +21,7 @@
             android:elevation="4dp">
 
             <TextView
+                android:id="@+id/tvTeacherName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="👩‍🏫 Giáo viên: Trần Thị Mai"
@@ -29,6 +30,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvTeacherClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="📚 Lớp phụ trách: Lá 2"
@@ -54,33 +56,19 @@
             android:id="@+id/btnManageSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🗓️  Quản lý lịch học (CRUD)"
+            android:text="🗓️  Quản lý lịch học"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#2196F3"
+            android:backgroundTint="#E91E63"
             android:layout_marginTop="24dp"
             android:padding="16dp"/>
 
-        <!-- Nút: Xóa lớp -->
         <Button
-            android:id="@+id/btnDeleteClass"
+            android:id="@+id/btnManageClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🏫  Xóa lớp học"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#F44336"
-            android:layout_marginTop="12dp"
-            android:padding="16dp"/>
-
-        <!-- Nút: Thêm lớp -->
-        <Button
-            android:id="@+id/btnAddClass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="➕  Thêm lớp mới"
+            android:text="📋 Quản lý lớp học"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -88,17 +76,17 @@
             android:layout_marginTop="12dp"
             android:padding="16dp"/>
 
-        <!-- Nút: Sửa thông tin lớp -->
         <Button
-            android:id="@+id/btnEditClass"
+            android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="✏️  Sửa thông tin lớp"
+            android:text="🚪  Đăng xuất"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#FFC107"
-            android:layout_marginTop="12dp"
+            android:backgroundTint="#9E9E9E"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:padding="16dp"/>
     </LinearLayout>
 </ScrollView>
