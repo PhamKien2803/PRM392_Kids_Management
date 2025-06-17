@@ -1,40 +1,40 @@
 package com.example.project_prm392_kidmanagement.Entity;
 
 public class StudentToClass {
-    private int studentClassID;
-    private int studentId;
-    private int classId;
+    private String studentClassID;
+    private Student studentId;
+    private Class classId;
 
     public StudentToClass() {
     }
 
-    public StudentToClass(int studentClassID, int studentId, int classId) {
+    public StudentToClass(String studentClassID, Student studentId, Class classId) {
         this.studentClassID = studentClassID;
         this.studentId = studentId;
         this.classId = classId;
     }
 
-    public int getStudentClassID() {
+    public String getStudentClassID() {
         return studentClassID;
     }
 
-    public void setStudentClassID(int studentClassID) {
+    public void setStudentClassID(String studentClassID) {
         this.studentClassID = studentClassID;
     }
 
-    public int getStudentId() {
+    public Student getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(Student studentId) {
         this.studentId = studentId;
     }
 
-    public int getClassId() {
+    public Class getClassId() {
         return classId;
     }
 
-    public void setClassId(int classId) {
+    public void setClassId(Class classId) {
         this.classId = classId;
     }
 

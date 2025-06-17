@@ -15,6 +15,7 @@ import java.util.List;
 public class StudentToClassDao {
     private final SqlDatabaseHelper dbHelper;
 
+
     public StudentToClassDao(Context context) {
         dbHelper = new SqlDatabaseHelper(context);
     }
@@ -23,8 +24,8 @@ public class StudentToClassDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("studentClassID", stc.getStudentClassID());
-        values.put("studentId", stc.getStudentId());
-        values.put("classId", stc.getClassId());
+        values.put("studentId", stc.getStudentId().getStudentId());
+        values.put("classId", stc.getClassId().getClassId());
 
         return db.insert(SqlDatabaseHelper.TABLE_STUDENT_TO_CLASS, null, values);
     }
@@ -32,8 +33,8 @@ public class StudentToClassDao {
     public boolean update(StudentToClass stc) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("studentId", stc.getStudentId());
-        values.put("classId", stc.getClassId());
+        values.put("studentId", stc.getStudentId().getStudentId());
+        values.put("classId", stc.getClassId().getClassId());
 
         int rows = db.update(
                 SqlDatabaseHelper.TABLE_STUDENT_TO_CLASS,
@@ -66,7 +67,7 @@ public class StudentToClassDao {
 
         StudentToClass result = null;
         if (cursor.moveToFirst()) {
-            result = StudentToClassMapper.fromCursor(cursor);
+            result = StudentToClassMapper.fromCursor(cursor, dbHelper.getContext());
         }
 
         cursor.close();
@@ -87,7 +88,7 @@ public class StudentToClassDao {
         );
 
         while (cursor.moveToNext()) {
-            StudentToClass stc = StudentToClassMapper.fromCursor(cursor);
+            StudentToClass stc = StudentToClassMapper.fromCursor(cursor, dbHelper.getContext());
             list.add(stc);
         }
 
