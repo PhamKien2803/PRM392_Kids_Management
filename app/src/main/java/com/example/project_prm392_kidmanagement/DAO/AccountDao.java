@@ -140,4 +140,19 @@ public class AccountDao {
         cursor.close();
         return exists;
     }
+    public String getParentIdByUsername(String username) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT parentId FROM accounts WHERE username = ?",
+                new String[]{username}
+        );
+
+        String parentId = null;
+        if (cursor.moveToFirst()) {
+            parentId = cursor.getString(0);
+        }
+        cursor.close();
+        return parentId;
+    }
+
 }
