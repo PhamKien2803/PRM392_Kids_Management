@@ -5,14 +5,14 @@ public class Account {
     private String username;
     private String password;
     private String email;
-    private boolean role;
+    private int role;
     private Teacher teacherId;
     private Parent parentId;
 
     public Account() {
     }
 
-    public Account(int accountId, String username, String password, String email, boolean role, Teacher teacherId, Parent parentId) {
+    public Account(int accountId, String username, String password, String email, int role, Teacher teacherId, Parent parentId) {
         this.accountId = accountId;
         this.username = username;
         this.password = password;
@@ -54,11 +54,11 @@ public class Account {
         this.email = email;
     }
 
-    public boolean isRole() {
+    public int isRole() {
         return role;
     }
 
-    public void setRole(boolean role) {
+    public void setRole(int role) {
         this.role = role;
     }
 

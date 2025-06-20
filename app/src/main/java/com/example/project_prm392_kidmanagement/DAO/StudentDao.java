@@ -105,4 +105,28 @@ public class StudentDao {
         cursor.close();
         return list;
     }
+
+    public List<Student> getStudentsByParentId(String parentId) {
+        List<Student> students = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                SqlDatabaseHelper.TABLE_STUDENT,
+                null,
+                "parentId = ?",
+                new String[]{parentId},
+                null,
+                null,
+                "fullName ASC"
+        );
+
+        while (cursor.moveToNext()) {
+            Student student = StudentMapper.fromCursor(cursor, context);
+            students.add(student);
+        }
+
+        cursor.close();
+        return students;
+    }
+
 }

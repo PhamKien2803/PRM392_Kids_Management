@@ -36,7 +36,7 @@ public class TeacherHomeManagerActivity extends AppCompatActivity {
         tvTeacherClass = findViewById(R.id.tvTeacherClass);
         btnViewTimetable = findViewById(R.id.btnViewTimetable);
         btnManageSchedule = findViewById(R.id.btnManageSchedule);
-        btnManageClass = findViewById(R.id.btnManageClass);
+//        btnManageClass = findViewById(R.id.btnManageClass);
         btnLogout = findViewById(R.id.btnLogout);
 
         if (teacher != null) {
@@ -59,11 +59,11 @@ public class TeacherHomeManagerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnManageClass.setOnClickListener(view -> {
-            Intent intent = new Intent(this, TeacherClassManagerActivity.class);
-            intent.putExtra("teacherId", teacherId);
-            startActivity(intent);
-        });
+//        btnManageClass.setOnClickListener(view -> {
+//            Intent intent = new Intent(this, TeacherClassManagerActivity.class);
+//            intent.putExtra("teacherId", teacherId);
+//            startActivity(intent);
+//        });
 
 
         btnLogout.setOnClickListener(view -> {

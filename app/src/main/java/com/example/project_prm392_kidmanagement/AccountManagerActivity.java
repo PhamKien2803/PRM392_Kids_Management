@@ -49,17 +49,22 @@ public class AccountManagerActivity extends AppCompatActivity {
                 if (account != null) {
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
-                    if (account.isRole()) {
-                        Intent teacherIntent = new Intent(this, TeacherHomeManagerActivity.class);
-//                        teacherIntent.putExtra("teacherId", account.getTeacherId() != null ? account.getTeacherId().getTeacherId() : -
-//                        teacherIntent.putExtra("teacherId", account.getTeacherId().getTeacherId());
-                        teacherIntent.putExtra("teacherId", String.valueOf(account.getTeacherId().getTeacherId()));
-                        startActivity(teacherIntent);
+                    Intent intent;
+                    int role = account.isRole();
+
+                    if (role == 1) {
+                        intent = new Intent(this, TeacherHomeManagerActivity.class);
+                        intent.putExtra("teacherId", String.valueOf(account.getTeacherId().getTeacherId()));
+                    } else if (role == 2) {
+                        intent = new Intent(this, ParentHomeManagerActivity.class);
+                        int parentId = (account.getParentId() != null) ? Integer.parseInt(account.getParentId().getParentId()) : -1;
+                        intent.putExtra("parentId", parentId);
                     } else {
-                        Intent parentIntent = new Intent(this, ParentHomeManagerActivity.class);
-                        parentIntent.putExtra("parentId", account.getParentId() != null ? account.getParentId().getParentId() : -1);
-                        startActivity(parentIntent);
+                        intent = new Intent(this, TeacherClassManagerActivity.class);
+                        intent.putExtra("teacherId", String.valueOf(account.getTeacherId().getTeacherId()));
                     }
+
+                    startActivity(intent);
 
                     finish();
                 } else {

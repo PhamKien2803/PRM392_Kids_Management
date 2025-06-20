@@ -4,14 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F2FD">
+    android:background="#E3F2FD"
+    android:fitsSystemWindows="true">
 
-    <!-- Toolbar -->
+    <!-- Thanh công cụ (Toolbar) -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#1976D2"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,11 +25,11 @@
             app:subtitleTextColor="#BBDEFB"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Content -->
+    <!-- Nội dung có thể cuộn bên dưới toolbar -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:padding="16dp">
 
         <LinearLayout
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Học sinh info -->
+            <!-- Thông tin bé -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +48,7 @@
                 android:layout_marginBottom="16dp">
 
                 <TextView
+                    android:id="@+id/tvStudentName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🧒 Bé: Nguyễn Minh Anh"
@@ -54,6 +57,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvClassInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="📚 Lớp: Lá 1 – Tuần 24 (10 – 14/06/2025)"
@@ -62,6 +66,7 @@
                     android:layout_marginTop="4dp" />
 
                 <TextView
+                    android:id="@+id/tvTeacherName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="👩‍🏫 GV: Cô Mai/Cô Hương"
@@ -70,95 +75,74 @@
                     android:layout_marginTop="4dp" />
             </LinearLayout>
 
-            <!-- Table: Thời khóa biểu -->
-            <TableLayout
+            <!-- Thời khóa biểu -->
+<!--            <TableLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:stretchColumns="1,2,3,4,5"-->
+<!--                android:background="#FFFFFF"-->
+<!--                android:elevation="2dp"-->
+<!--                android:padding="8dp"-->
+<!--                android:layout_marginBottom="24dp">-->
+
+<!--                &lt;!&ndash; Dòng tiêu đề &ndash;&gt;-->
+<!--                <TableRow android:background="#BBDEFB" android:padding="8dp">-->
+<!--                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" />-->
+<!--                    <TextView android:text="T2" android:textStyle="bold" android:gravity="center"/>-->
+<!--                    <TextView android:text="T3" android:textStyle="bold" android:gravity="center"/>-->
+<!--                    <TextView android:text="T4" android:textStyle="bold" android:gravity="center"/>-->
+<!--                    <TextView android:text="T5" android:textStyle="bold" android:gravity="center"/>-->
+<!--                    <TextView android:text="T6" android:textStyle="bold" android:gravity="center"/>-->
+<!--                </TableRow>-->
+
+<!--                &lt;!&ndash; Các tiết học &ndash;&gt;-->
+<!--                <TableRow android:background="#E3F2FD" android:padding="6dp">-->
+<!--                    <TextView android:text="Tiết 1" android:textStyle="bold" />-->
+<!--                    <TextView android:text="➕ Toán" android:gravity="center" />-->
+<!--                    <TextView android:text="🎨 Vẽ" android:gravity="center" />-->
+<!--                    <TextView android:text="🎵 Âm nhạc" android:gravity="center" />-->
+<!--                    <TextView android:text="➕ Toán" android:gravity="center" />-->
+<!--                    <TextView android:text="🤸‍♂️ Thể dục" android:gravity="center" />-->
+<!--                </TableRow>-->
+
+<!--                <TableRow android:background="#F0F8FF" android:padding="6dp">-->
+<!--                    <TextView android:text="Tiết 2" android:textStyle="bold" />-->
+<!--                    <TextView android:text="🎨 Vẽ" android:gravity="center" />-->
+<!--                    <TextView android:text="🤸‍♀️ Thể dục" android:gravity="center" />-->
+<!--                    <TextView android:text="📖 Văn học" android:gravity="center" />-->
+<!--                    <TextView android:text="🎵 Âm nhạc" android:gravity="center" />-->
+<!--                    <TextView android:text="📚 Kể chuyện" android:gravity="center" />-->
+<!--                </TableRow>-->
+
+<!--                <TableRow android:background="#E3F2FD" android:padding="6dp">-->
+<!--                    <TextView android:text="Tiết 3" android:textStyle="bold" />-->
+<!--                    <TextView android:text="🎭 Ca múa" android:gravity="center" />-->
+<!--                    <TextView android:text="➕ Toán" android:gravity="center" />-->
+<!--                    <TextView android:text="🏃 Vận động" android:gravity="center" />-->
+<!--                    <TextView android:text="🎨 Vẽ" android:gravity="center" />-->
+<!--                    <TextView android:text="🧠 Kỹ năng" android:gravity="center" />-->
+<!--                </TableRow>-->
+<!--            </TableLayout>-->
+            <!-- Thời khóa biểu động -->
+            <LinearLayout
+                android:id="@+id/scheduleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="1,2,3,4,5"
+                android:orientation="vertical"
                 android:background="#FFFFFF"
                 android:elevation="2dp"
-                android:padding="8dp"
+                android:padding="16dp"
                 android:layout_marginBottom="24dp">
 
-                <!-- Header row -->
-                <TableRow android:background="#BBDEFB" android:padding="8dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="T2"
-                        android:gravity="center"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="T3"
-                        android:gravity="center"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="T4"
-                        android:gravity="center"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="T5"
-                        android:gravity="center"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="T6"
-                        android:gravity="center"
-                        android:textStyle="bold" />
-                </TableRow>
-
-                <!-- Tiết 1 -->
-                <TableRow android:background="#E3F2FD" android:padding="6dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tiết 1"
-                        android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="➕ Toán" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎨 Vẽ" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎵 Âm nhạc" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="➕ Toán" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🤸‍♂️ Thể dục" android:gravity="center"/>
-                </TableRow>
-
-                <!-- Tiết 2 -->
-                <TableRow android:background="#F0F8FF" android:padding="6dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tiết 2"
-                        android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎨 Vẽ" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🤸‍♀️ Thể dục" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📖 Văn học" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎵 Âm nhạc" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📚 Kể chuyện" android:gravity="center"/>
-                </TableRow>
-
-                <!-- Tiết 3 -->
-                <TableRow android:background="#E3F2FD" android:padding="6dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tiết 3"
-                        android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎭 Ca múa" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="➕ Toán" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏃 Vận động" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎨 Vẽ" android:gravity="center"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🧠 Kỹ năng" android:gravity="center"/>
-                </TableRow>
-            </TableLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📆 Thời khóa biểu"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D47A1"
+                    android:layout_marginBottom="8dp"/>
+            </LinearLayout>
 
             <!-- Ghi chú -->
             <TextView
@@ -170,34 +154,34 @@
                 android:background="#F9F9F9"
                 android:padding="12dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="#ECEFF1"
                 android:elevation="2dp" />
 
-            <!-- Navigation buttons -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:paddingTop="8dp">
+            <!-- Nút điều hướng -->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:gravity="center"-->
+<!--                android:paddingTop="8dp">-->
 
-                <Button
-                    android:id="@+id/btnPrevWeek"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⏪ Tuần trước"
-                    android:backgroundTint="#1976D2"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginEnd="8dp" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnPrevWeek"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="⏪ Tuần trước"-->
+<!--                    android:backgroundTint="#1976D2"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:layout_marginEnd="8dp" />-->
 
-                <Button
-                    android:id="@+id/btnNextWeek"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tuần sau ⏩"
-                    android:backgroundTint="#1976D2"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
+<!--                <Button-->
+<!--                    android:id="@+id/btnNextWeek"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Tuần sau ⏩"-->
+<!--                    android:backgroundTint="#1976D2"-->
+<!--                    android:textColor="#FFFFFF" />-->
+<!--            </LinearLayout>-->
+
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
@@ -211,6 +195,5 @@
                 android:layout_marginBottom="16dp"
                 android:padding="16dp"/>
         </LinearLayout>
-
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

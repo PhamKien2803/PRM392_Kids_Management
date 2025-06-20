@@ -102,4 +102,26 @@ public class ScheduleDao {
         cursor.close();
         return list;
     }
+
+    public List<Schedule> getSchedulesByClassId(String classId) {
+        List<Schedule> schedules = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT s.* FROM schedules s " +
+                "JOIN schedulesToClass stc ON s.scheduleId = stc.scheduleId " +
+                "WHERE stc.classId = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{classId});
+
+        while (cursor.moveToNext()) {
+            Schedule schedule = ScheduleMapper.fromCursor(cursor);
+            schedules.add(schedule);
+        }
+
+        cursor.close();
+        return schedules;
+    }
+
+
+
 }

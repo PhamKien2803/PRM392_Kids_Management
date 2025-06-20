@@ -17,7 +17,8 @@ public class AccountMapper {
         String username = cursor.getString(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_USERNAME));
         String password = cursor.getString(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_PASSWORD));
         String email = cursor.getString(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_EMAIL));
-        boolean role = cursor.getInt(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_ROLE)) == 1;
+//        boolean role = cursor.getInt(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_ROLE)) == 1;
+        int role =  cursor.getInt(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_ROLE));
 
         String teacherIdStr = cursor.getString(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_TEACHER_ID));
         String parentIdStr = cursor.getString(cursor.getColumnIndexOrThrow(SqlDatabaseHelper.COLUMN_PARENT_ID));

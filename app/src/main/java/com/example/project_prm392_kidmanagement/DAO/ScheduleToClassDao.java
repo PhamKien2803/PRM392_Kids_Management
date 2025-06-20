@@ -23,8 +23,8 @@ public class ScheduleToClassDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("scheduleClassID", obj.getScheduleClassID());
-        values.put("scheduleId", obj.getScheduleId());
-        values.put("classId", obj.getClassId());
+        values.put("scheduleId", obj.getScheduleId().getScheduleId());
+        values.put("classId", obj.getClassId().getClassId());
 
         return db.insert(SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS, null, values);
     }
@@ -32,8 +32,8 @@ public class ScheduleToClassDao {
     public boolean update(SchedulesToClass obj) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("scheduleId", obj.getScheduleId());
-        values.put("classId", obj.getClassId());
+        values.put("scheduleId", obj.getScheduleId().getScheduleId());
+        values.put("classId", obj.getClassId().getClassId());
 
         int rows = db.update(
                 SqlDatabaseHelper.TABLE_SCHEDULES_TO_CLASS,
@@ -66,7 +66,7 @@ public class ScheduleToClassDao {
 
         SchedulesToClass result = null;
         if (cursor.moveToFirst()) {
-            result = ScheduleToClassMapper.fromCursor(cursor);
+            result = ScheduleToClassMapper.fromCursor(cursor, dbHelper.getContext());
         }
         cursor.close();
         return result;
@@ -86,7 +86,7 @@ public class ScheduleToClassDao {
         );
 
         while (cursor.moveToNext()) {
-            SchedulesToClass obj = ScheduleToClassMapper.fromCursor(cursor);
+            SchedulesToClass obj = ScheduleToClassMapper.fromCursor(cursor, dbHelper.getContext());
             list.add(obj);
         }
         cursor.close();
