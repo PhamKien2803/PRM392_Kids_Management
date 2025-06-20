@@ -49,16 +49,6 @@ public class AccountManagerActivity extends AppCompatActivity {
                 if (account != null) {
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 
-//                    if (account.isRole() == 1) {
-//                        Intent teacherIntent = new Intent(this, TeacherHomeManagerActivity.class);
-//                        teacherIntent.putExtra("teacherId", String.valueOf(account.getTeacherId().getTeacherId()));
-//                        startActivity(teacherIntent);
-//                    } else {
-//                        Intent parentIntent = new Intent(this, ParentHomeManagerActivity.class);
-//                        parentIntent.putExtra("parentId", account.getParentId() != null ? account.getParentId().getParentId() : -1);
-//                        startActivity(parentIntent);
-//                    }
-
                     Intent intent;
                     int role = account.isRole();
 
