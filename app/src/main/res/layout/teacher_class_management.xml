@@ -210,15 +210,15 @@
         android:padding="16dp" />
 
     <Button
-        android:id="@+id/btnBack"
+        android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🔙 Quay lại"
+        android:text="🚪  Đăng xuất"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#2196F3"
-        android:layout_marginTop="12dp"
+        android:backgroundTint="#9E9E9E"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
-        android:padding="16dp" />
+        android:padding="16dp"/>
 </LinearLayout>
