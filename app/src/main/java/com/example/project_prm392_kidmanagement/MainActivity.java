@@ -27,16 +27,28 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "InsertSampleData";
 
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        // Chèn dữ liệu mẫu khi app mở lần đầu (chỉ nên dùng để test)
+//        insertSampleData();
+//
+//        // startActivity(new Intent(this, AccountManagerActivity.class));
+//        // finish();
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Chèn dữ liệu mẫu khi app mở lần đầu (chỉ nên dùng để test)
-        insertSampleData();
+        // Xóa tất cả tài khoản trước khi chèn mới
+        AccountDao accountDao = new AccountDao(this);
+        accountDao.deleteAll();
 
-        // startActivity(new Intent(this, AccountManagerActivity.class));
-        // finish();
+        insertSampleData(); // chèn lại dữ liệu
     }
+
 
     private void insertSampleData() {
         // Khởi tạo DAO
@@ -53,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         Teacher teacher = new Teacher("GV001", "Nguyễn Xuân Mai", "Hà Nội", "0909123456", "1980-04-12");
         long tResult = teacherDao.insert(teacher);
 
+        Teacher principal = new Teacher("GV002", "Hứa Văn Cường", "Hà Nội", "0989123456", "1988-04-12");
+        long printResult = teacherDao.insert(principal);
+
         // 2. Thêm phụ huynh
         Parent parent = new Parent("PH001", "Bùi Trung Hiếu", "Yên Bái", "0912345678", "1985-08-30");
         long pResult = parentDao.insert(parent);
@@ -62,17 +77,26 @@ public class MainActivity extends AppCompatActivity {
         teacherAccount.setUsername("teacher");
         teacherAccount.setPassword("123456");
         teacherAccount.setEmail("teacher.mai@sakura.edu.vn");
-        teacherAccount.setRole(true); // giáo viên
+        teacherAccount.setRole(1); // giáo viên
         teacherAccount.setTeacherId(teacher);
         teacherAccount.setParentId(null);
         long a1 = accountDao.insert(teacherAccount);
+
+        Account principalAccount = new Account();
+        principalAccount.setUsername("principal");
+        principalAccount.setPassword("123456");
+        principalAccount.setEmail("principal.mai@sakura.edu.vn");
+        principalAccount.setRole(0); // hiệu trường
+        principalAccount.setTeacherId(principal);
+        principalAccount.setParentId(null);
+        long a11 = accountDao.insert(principalAccount);
 
         // 4. Thêm tài khoản phụ huynh
         Account parentAccount = new Account();
         parentAccount.setUsername("parent");
         parentAccount.setPassword("123456");
         parentAccount.setEmail("parent@sakura.edu.vn");
-        parentAccount.setRole(false); // phụ huynh
+        parentAccount.setRole(2); // phụ huynh
         parentAccount.setParentId(parent);
         parentAccount.setTeacherId(null);
         long a2 = accountDao.insert(parentAccount);
@@ -119,8 +143,10 @@ public class MainActivity extends AppCompatActivity {
         String message = "Đã chèn dữ liệu:\n"
                 + "Giáo viên: " + (tResult != -1 ? "OK" : "FAIL") + "\n"
                 + "Phụ huynh: " + (pResult != -1 ? "OK" : "FAIL") + "\n"
+                + "Hiệu trưởng: " + (printResult != -1 ? "OK" : "FAIL") + "\n"
                 + "Account GV: " + (a1 != -1 ? "OK" : "FAIL") + "\n"
                 + "Account PH: " + (a2 != -1 ? "OK" : "FAIL") + "\n"
+                + "Account Principal: " + (a11 != -1 ? "OK" : "FAIL") + "\n"
                 + "Schedule" + (s1 != -1 ? "OK" : "FAIL") + "\n"
                 + "Schedule" + (s2 != -1 ? "OK" : "FAIL") + "\n"
                 + "Class" + (cResult != -1 ? "OK" : "FAIL") + "\n"
@@ -131,5 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+
     }
 }

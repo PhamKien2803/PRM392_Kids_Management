@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TeacherClassManagerActivity extends AppCompatActivity {
 
-    private Button btnBack, btnAddClass, btnEditClass;
+    private Button btnLogout, btnAddClass, btnEditClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_class_management);
 
-        btnBack = findViewById(R.id.btnBack);
+        btnLogout = findViewById(R.id.btnLogout);
         btnAddClass = findViewById(R.id.btnAddClass);
         btnEditClass = findViewById(R.id.btnEditClass);
 
@@ -37,8 +37,11 @@ public class TeacherClassManagerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnBack.setOnClickListener(v -> {
-            finish();
+        btnLogout.setOnClickListener(view -> {
+            Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, AccountManagerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
     }
 }

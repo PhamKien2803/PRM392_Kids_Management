@@ -25,7 +25,8 @@ public class AccountDao {
         values.put("username", account.getUsername());
         values.put("password", account.getPassword());
         values.put("email", account.getEmail());
-        values.put("role", account.isRole() ? 1 : 0);
+//        values.put("role", account.isRole() ? 1 : 0);
+        values.put("role", account.isRole());
         values.put("teacherId", account.getTeacherId() != null ? account.getTeacherId().getTeacherId() : null);
         values.put("parentId", account.getParentId() != null ? account.getParentId().getParentId() : null);
 
@@ -98,6 +99,11 @@ public class AccountDao {
 
         cursor.close();
         return account;
+    }
+
+    public void deleteAll() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(SqlDatabaseHelper.TABLE_ACCOUNT, null, null);
     }
 
 
