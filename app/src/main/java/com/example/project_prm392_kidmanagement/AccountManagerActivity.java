@@ -54,15 +54,30 @@ public class AccountManagerActivity extends AppCompatActivity {
 
                     if (role == 1) {
                         intent = new Intent(this, TeacherHomeManagerActivity.class);
-                        intent.putExtra("teacherId", String.valueOf(account.getTeacherId().getTeacherId()));
+                        if (account.getTeacherId() != null && account.getTeacherId().getTeacherId() != null) {
+                            intent.putExtra("teacherId", account.getTeacherId().getTeacherId()); // giữ kiểu String
+                        } else {
+                            Toast.makeText(this, "Missing teacher ID for role 1", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     } else if (role == 2) {
                         intent = new Intent(this, ParentHomeManagerActivity.class);
-                        int parentId = (account.getParentId() != null) ? Integer.parseInt(account.getParentId().getParentId()) : -1;
-                        intent.putExtra("parentId", parentId);
+                        if (account.getParentId() != null && account.getParentId().getParentId() != null) {
+                            intent.putExtra("parentId", account.getParentId().getParentId()); // không parseInt
+                        } else {
+                            Toast.makeText(this, "Missing parent ID", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     } else {
                         intent = new Intent(this, TeacherClassManagerActivity.class);
-                        intent.putExtra("teacherId", String.valueOf(account.getTeacherId().getTeacherId()));
+                        if (account.getTeacherId() != null && account.getTeacherId().getTeacherId() != null) {
+                            intent.putExtra("teacherId", account.getTeacherId().getTeacherId()); // giữ kiểu String
+                        } else {
+                            Toast.makeText(this, "Missing teacher ID for default role", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
+
 
                     startActivity(intent);
 
