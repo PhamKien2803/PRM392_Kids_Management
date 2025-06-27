@@ -1,5 +1,6 @@
 package com.example.project_prm392_kidmanagement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +70,8 @@ public class TeacherAddClassManagerActivity extends AppCompatActivity {
             long result = classDao.insert(classroom);
             if (result != -1) {
                 Toast.makeText(this, "Thêm lớp thành công!", Toast.LENGTH_SHORT).show();
-                finish();
+                Intent intent = new Intent(this, TeacherClassManagerActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(this, "Thêm lớp thất bại!", Toast.LENGTH_SHORT).show();
             }
