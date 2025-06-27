@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
         Teacher teacher = new Teacher("GV001", "Nguyễn Xuân Mai", "Hà Nội", "0909123456", "1980-04-12");
         long tResult = teacherDao.insert(teacher);
 
+        Teacher teacher2 = new Teacher("GV003", "Nguyễn Xuân Mai2", "Hà Nội", "0909123456", "1980-04-12");
+        long tResult2 = teacherDao.insert(teacher2);
+
+        Teacher teacher3 = new Teacher("GV004", "Nguyễn Xuân Mai3", "Hà Nội", "0909123456", "1980-04-12");
+        long tResult3 = teacherDao.insert(teacher3);
+
         Teacher principal = new Teacher("GV002", "Hứa Văn Cường", "Hà Nội", "0989123456", "1988-04-12");
         long printResult = teacherDao.insert(principal);
 
@@ -115,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
         class1.setTeacherId(teacher);
         class1.setScheduleId(schedule1);
         long cResult = classDao.insert(class1);
+
+        Class class2 = new Class();
+        class2.setClassId("CL02");
+        class2.setClassName("Lá 3");
+        class2.setSchoolYear("2024-2025");
+        class2.setTeacherId(teacher2);
+        class2.setScheduleId(schedule1);
+        long cResult2 = classDao.insert(class2);
 
 
         // 7. Thêm học sinh
