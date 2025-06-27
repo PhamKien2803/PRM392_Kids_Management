@@ -101,4 +101,46 @@ public class TeacherDao {
         cursor.close();
         return list;
     }
+
+    public List<String> getTeacherSchedulesInClass(String teacherId, String classId) {
+        List<String> scheduleList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT s.activityName, s.timeStart, s.timeEnd, s.timeDate " +
+                "FROM schedules s " +
+                "JOIN schedulesToClass stc ON s.scheduleId = stc.scheduleId " +
+                "JOIN classes c ON stc.classId = c.classId " +
+                "WHERE c.teacherId = ? AND c.classId = ? " +
+                "ORDER BY s.timeDate ASC, s.timeStart ASC";
+
+        Cursor cursor = db.rawQuery(query, new String[]{teacherId, classId});
+        int tiet = 1;
+
+        while (cursor.moveToNext()) {
+            String activityName = cursor.getString(0);
+            String timeStart = cursor.getString(1);
+            String timeEnd = cursor.getString(2);
+            String timeDate = cursor.getString(3);
+
+            String[] parts = activityName.split(" - ", 2);
+            String subject = parts.length > 0 ? parts[0].trim() : "Chưa rõ";
+            String lesson = parts.length > 1 ? parts[1].trim() : "Chưa rõ";
+
+            String line = "📅 " + timeDate + "\n"
+                    + "⏰ " + timeStart + " - " + timeEnd + "\n"
+                    + "Môn: " + subject + " – Bài: " + lesson;
+
+            scheduleList.add(line);
+            tiet++;
+        }
+
+        cursor.close();
+
+        if (scheduleList.isEmpty()) {
+            scheduleList.add("Không có tiết học nào cho giáo viên này trong lớp " + classId);
+        }
+
+        return scheduleList;
+    }
+
 }
