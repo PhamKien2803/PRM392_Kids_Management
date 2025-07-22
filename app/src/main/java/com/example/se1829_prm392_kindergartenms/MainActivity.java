@@ -105,6 +105,15 @@ public class MainActivity extends AppCompatActivity {
         parentAccount.setTeacherId(null);
         long a2 = accountDao.insert(parentAccount);
 
+        Account parent1Account = new Account();
+        parent1Account.setUsername("test1");
+        parent1Account.setPassword("123456");
+        parent1Account.setEmail("hieubthe173123@fpt.edu.vn");
+        parent1Account.setRole(2); // phụ huynh
+        parent1Account.setParentId(parent);
+        parent1Account.setTeacherId(null);
+        long b3 = accountDao.insert(parent1Account);
+
         // 6. Thêm thời khóa biểu
         Schedule schedule1 = new Schedule("SCH001", "Toán - Nhận biết số lượng", "08:00", "08:45", "14/07/2025");
         Schedule schedule2 = new Schedule("SCH002", "Văn - Kể chuyện bé ngoan", "09:00", "09:45", "14/07/2025");
