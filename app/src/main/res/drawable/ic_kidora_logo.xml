@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Hình tròn nền -->
+    <path
+        android:fillColor="#FF9800"
+        android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2z"/>
+
+    <!-- Mặt trời nhỏ -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M12,6c-3.31,0 -6,2.69 -6,6s2.69,6 6,6 6,-2.69 6,-6 -2.69,-6 -6,-6z"/>
+
+    <!-- Mắt trái -->
+    <path
+        android:fillColor="#FF6F00"
+        android:pathData="M9,10.5c-0.83,0 -1.5,0.67 -1.5,1.5s0.67,1.5 1.5,1.5 1.5,-0.67 1.5,-1.5 -0.67,-1.5 -1.5,-1.5z"/>
+
+    <!-- Mắt phải -->
+    <path
+        android:fillColor="#FF6F00"
+        android:pathData="M15,10.5c-0.83,0 -1.5,0.67 -1.5,1.5s0.67,1.5 1.5,1.5 1.5,-0.67 1.5,-1.5 -0.67,-1.5 -1.5,-1.5z"/>
+
+    <!-- Miệng cười -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FF6F00"
+        android:strokeWidth="1.5"
+        android:pathData="M8,15c0,2.21 1.79,4 4,4s4,-1.79 4,-4"/>
+
+    <!-- Tia sáng -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M12,1l0.93,2.07L15,2.14l-1.07,1.93L15,6l-2.07,-0.93L12,7L11.07,4.93L9,6l1.07,-1.93L9,2.14l2.07,0.93z"/>
+
+    <!-- Tia sáng phải -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M20,12l-2.07,0.93L18.86,15l-1.93,-1.07L15,15l0.93,-2.07L15,12l2.07,0.93L18.86,9l1.93,1.07z"/>
+
+    <!-- Tia sáng trái -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M4,12l2.07,0.93L5.14,15l1.93,-1.07L9,15l-0.93,-2.07L9,12l-2.07,0.93L5.14,9l-1.93,1.07z"/>
+
+    <!-- Tia sáng dưới -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M12,23l-0.93,-2.07L9,21.86l1.07,-1.93L9,18l2.07,0.93L12,17l0.93,2.07L15,18l-1.07,1.93L15,21.86l-2.07,-0.93z"/>
+</vector>

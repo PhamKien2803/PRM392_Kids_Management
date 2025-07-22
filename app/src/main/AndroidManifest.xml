@@ -2,56 +2,64 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-feature android:name="android.hardware.telephony" android:required="false" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Personal Management"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:targetApi="31">
+        android:theme="@style/Theme.SE1828PRM392KindergartenMS">
 
         <activity
-            android:name=".AccountManagerActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
-<!--        <activity android:name=".AccountManagerActivity" android:exported="true" />-->
-
+<!--         <activity-->
+<!--         android:name=".MainActivity"-->
+<!--         android:exported="true">-->
+<!--         <intent-filter>-->
+<!--         <action android:name="android.intent.action.MAIN" />-->
+<!--         <category android:name="android.intent.category.LAUNCHER" />-->
+<!--         </intent-filter>-->
+<!--         </activity>-->
+        <!-- <activity android:name=".LoginActivity" android:exported="true" /> -->
+        <!-- <activity android:name=".TeacherHomeManagerActivity" android:exported="false"/> -->
         <activity
             android:name=".TeacherHomeManagerActivity"
             android:exported="false" />
-
-        <activity
-            android:name=".ParentHomeManagerActivity"
-            android:exported="false" />
-
         <activity android:name=".TeacherClassManagerActivity" />
         <activity android:name=".TeacherViewTimeTableManagerActivity" />
-        <activity android:name=".TeacherScheduleManagerActivity" />
         <activity android:name=".TeacherEditClassManagerActivity" />
         <activity android:name=".TeacherAddClassManagerActivity" />
+        <activity android:name=".AddTeacherActivity" />
+        <activity android:name=".TeacherListActivity" />
+        <activity android:name=".TeacherStudentListActivity" />
+        <activity android:name=".FeedbackStudentActivity" />
+        <activity android:name=".EditTeacherActivity" />
+        <activity android:name=".ClassStudentListActivity" />
+        <activity android:name=".StudentDetailWithParentActivity" />
+        <activity android:name=".PrincipalAddSchedule" />
+        <activity android:name=".PrincipalManagementSchedule" />
+        <activity android:name=".ParentHomeActivity" />
+        <activity android:name=".AddScheduleToClassActivity" />
 
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ParentFeedbackActivity"
+            android:exported="false" />
     </application>
+
 </manifest>

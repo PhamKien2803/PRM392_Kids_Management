@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "649601457973",
+    "project_id": "se1828activitylifecy-6e8fe427",
+    "storage_bucket": "se1828activitylifecy-6e8fe427.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649601457973:android:40c4360949ca8b49acb67c",
+        "android_client_info": {
+          "package_name": "com.example.se1828_prm392_kindergartenms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkaQa7tHE3N834WZWQCrLdKDEmPpJNXeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

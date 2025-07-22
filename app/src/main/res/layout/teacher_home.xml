@@ -1,94 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F2FD"
-    android:padding="16dp"
+    android:background="#F1F6FA"
+    android:padding="24dp"
     android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <!-- Header giáo viên -->
+        <!-- Avatar trong khung nổi -->
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/circle_border"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_teacher"
+                android:scaleType="centerCrop"
+                android:background="@drawable/circle_mask"
+                android:clipToOutline="true" />
+        </FrameLayout>
+
+        <!-- Card thông tin giáo viên -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1976D2"
             android:orientation="vertical"
+            android:background="@drawable/bg_card_rounded"
             android:padding="16dp"
-            android:elevation="4dp">
+            android:elevation="2dp"
+            android:layout_marginBottom="24dp">
 
             <TextView
                 android:id="@+id/tvTeacherName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="👩‍🏫 Giáo viên: Trần Thị Mai"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:text="👩‍🏫 Cô Nguyễn Thị Bích Nga"
+                android:textColor="#1A237E"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvTeacherClass"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📚 Lớp phụ trách: Lá 2"
-                android:textColor="#BBDEFB"
+                android:text="📚 Lớp phụ trách: Lá 1"
+                android:textColor="#424242"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="6dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnViewTimetable"
+        <!-- Các nút chức năng -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📅  Xem lịch dạy"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#03A9F4"
-            android:layout_marginTop="12dp"
-            android:padding="16dp"/>
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_card_rounded"
+            android:elevation="2dp">
 
-        <!-- Nút: Quản lý lịch học -->
-        <Button
-            android:id="@+id/btnManageSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🗓️  Quản lý lịch học"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#E91E63"
-            android:layout_marginTop="24dp"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/btnViewTimetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📅  Xem lịch dạy"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/btn_blue" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btnManageClass"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="📋 Quản lý lớp học"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:backgroundTint="#4CAF50"-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            android:padding="16dp"/>-->
+            <Button
+                android:id="@+id/btnViewlistStudent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🧒  Xem danh sách học sinh"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/btn_pink" />
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🚪  Đăng xuất"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#9E9E9E"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/btnFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🧒  Feedback học sinh"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/btn_pink" />
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🚪  Đăng xuất"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_gray" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
