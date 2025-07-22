@@ -1,17 +1,23 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+
 import com.example.se1829_prm392_kindergartenms.DB.SqlDatabaseHelper;
 
 public class ClassStudentListActivity extends AppCompatActivity {
@@ -26,19 +32,17 @@ public class ClassStudentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_student_list);
 
-        // Initialize views
         studentListLayout = findViewById(R.id.studentListLayout);
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
 
         dbHelper = new SqlDatabaseHelper(this);
 
-        // Get data from intent
         classId = getIntent().getStringExtra("classId");
         className = getIntent().getStringExtra("className");
 
         if (classId == null || className == null) {
-            showToast("Missing class information");
+            showNotification("Thiếu thông tin", "Missing class information");
             finish();
             return;
         }
@@ -76,7 +80,7 @@ public class ClassStudentListActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error loading students", e);
-            showToast("Error loading student list");
+            showNotification("Lỗi", "Error loading student list");
         }
     }
 
@@ -86,11 +90,9 @@ public class ClassStudentListActivity extends AppCompatActivity {
         rowLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-//        rowLayout.setBackgroundResource(R.drawable.bg_student_row);
         rowLayout.setPadding(dpToPx(16), dpToPx(12), dpToPx(16), dpToPx(12));
         rowLayout.setGravity(Gravity.CENTER_VERTICAL);
 
-        // STT Column
         TextView tvStt = new TextView(this);
         tvStt.setText(String.valueOf(stt));
         tvStt.setTextColor(Color.BLACK);
@@ -98,7 +100,6 @@ public class ClassStudentListActivity extends AppCompatActivity {
         tvStt.setWidth(dpToPx(40));
         rowLayout.addView(tvStt);
 
-        // Student Info Column
         LinearLayout infoLayout = new LinearLayout(this);
         infoLayout.setOrientation(LinearLayout.VERTICAL);
         infoLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -122,7 +123,6 @@ public class ClassStudentListActivity extends AppCompatActivity {
 
         rowLayout.addView(infoLayout);
 
-        // Detail Button
         Button btnDetail = new Button(this);
         btnDetail.setText("Chi Tiết");
         btnDetail.setBackgroundColor(Color.parseColor("#2196F3"));
@@ -151,8 +151,27 @@ public class ClassStudentListActivity extends AppCompatActivity {
         return (int) (dp * getResources().getDisplayMetrics().density);
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    private void showNotification(String title, String message) {
+        String channelId = "class_student_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo danh sách học sinh",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 
     @Override

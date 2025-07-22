@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F0F8FF"
+    android:background="#FFFFFF"
     android:padding="16dp"
     android:fitsSystemWindows="true">
 
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="24dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="#FF9800"
         android:layout_marginBottom="20dp">
 
         <LinearLayout
@@ -44,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Thời Khóa Biểu Của Cô"
-                    android:textColor="#FF6F00"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -53,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tên giáo viên | Ngày"
-                    android:textColor="#424242"
+                    android:textColor="#FFFFFF"
                     android:textSize="15sp"
                     android:layout_marginTop="6dp" />
             </LinearLayout>
@@ -66,11 +65,10 @@
         android:layout_height="wrap_content"
         android:text="📆 Chọn ngày xem lịch dạy"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/rounded_button"
+        android:backgroundTint="#7B1FA2"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"/>
-
 
     <!-- Danh sách thời khóa biểu -->
     <ScrollView
@@ -93,7 +91,7 @@
         android:layout_height="wrap_content"
         android:text="◀︎ Quay Lại Trang Chủ"
         android:textColor="#FFFFFF"
-        android:background="@drawable/rounded_button"
+        android:backgroundTint="#424242"
         android:layout_gravity="center_horizontal"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"

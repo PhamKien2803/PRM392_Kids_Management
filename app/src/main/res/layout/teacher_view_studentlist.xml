@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#FFFDE7"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -14,9 +13,9 @@
         android:text="📚 Danh sách học sinh"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="#F57C00"
+        android:textColor="#7B1FA2"
         android:gravity="center"
-        android:background="@drawable/bg_title_banner"
+        android:background="#FF9800"
         android:padding="12dp"
         android:layout_marginBottom="20dp" />
 
@@ -38,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="◀︎ Quay Lại Trang Chủ"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF9800"
+        android:backgroundTint="#7B1FA2"
         android:layout_gravity="center_horizontal"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"

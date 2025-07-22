@@ -1,12 +1,16 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DB.SqlDatabaseHelper;
 import com.example.se1829_prm392_kindergartenms.Entity.Teacher;
@@ -23,7 +27,6 @@ public class EditTeacherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_teacher);
 
-        // Ánh xạ view
         etTeacherCode = findViewById(R.id.etTeacherCode);
         etFullName = findViewById(R.id.etFullName);
         etAddress = findViewById(R.id.etAddress);
@@ -34,30 +37,18 @@ public class EditTeacherActivity extends AppCompatActivity {
 
         dbHelper = new SqlDatabaseHelper(this);
 
-        // Nhận teacherId từ Intent
         Intent intent = getIntent();
         teacherId = intent.getStringExtra("teacherId");
 
         if (teacherId != null) {
             loadTeacherInfo(teacherId);
         } else {
-            Toast.makeText(this, "Không tìm thấy mã giáo viên", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Không tìm thấy mã giáo viên");
             finish();
         }
 
-        btnUpdateTeacher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateTeacherInfo();
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Quay lại
-            }
-        });
+        btnUpdateTeacher.setOnClickListener(v -> updateTeacherInfo());
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void loadTeacherInfo(String id) {
@@ -69,7 +60,7 @@ public class EditTeacherActivity extends AppCompatActivity {
             etPhone.setText(teacher.getPhone());
             etDob.setText(teacher.getDob());
         } else {
-            Toast.makeText(this, "Không tìm thấy thông tin giáo viên", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Không tìm thấy thông tin giáo viên");
             finish();
         }
     }
@@ -80,19 +71,41 @@ public class EditTeacherActivity extends AppCompatActivity {
         String phone = etPhone.getText().toString().trim();
         String dob = etDob.getText().toString().trim();
 
-        if (fullName.isEmpty() ) {
-            Toast.makeText(this, "Vui lòng nhập tên giáo viên", Toast.LENGTH_SHORT).show();
+        if (fullName.isEmpty()) {
+            showNotification("Thiếu thông tin", "Vui lòng nhập tên giáo viên");
             return;
         }
 
         boolean success = dbHelper.updateTeacher(new Teacher(teacherId, fullName, address, phone, dob));
 
         if (success) {
-            Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-            finish(); // Quay lại màn hình trước
+            showNotification("Thành công", "Cập nhật thành công");
+            finish();
         } else {
-            Toast.makeText(this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Cập nhật thất bại");
         }
     }
-}
 
+    private void showNotification(String title, String message) {
+        String channelId = "edit_teacher_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo giáo viên",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+    }
+}

@@ -1,11 +1,15 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.ClassDao;
 import com.example.se1829_prm392_kindergartenms.DAO.ParentDao;
@@ -33,7 +37,7 @@ public class ParentFeedbackActivity extends AppCompatActivity {
 
         String parentId = getIntent().getStringExtra("parentId");
         if (parentId == null) {
-            Toast.makeText(this, "Không tìm thấy mã phụ huynh", Toast.LENGTH_LONG).show();
+            showNotification("Lỗi", "Không tìm thấy mã phụ huynh");
             finish();
             return;
         }
@@ -50,12 +54,7 @@ public class ParentFeedbackActivity extends AppCompatActivity {
 
         loadStudentInfo(parentId);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void loadStudentInfo(String parentId) {
@@ -75,7 +74,30 @@ public class ParentFeedbackActivity extends AppCompatActivity {
                 }
             }
         } else {
-            Toast.makeText(this, "Không tìm thấy thông tin học sinh", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Không tìm thấy thông tin học sinh");
         }
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "parent_feedback_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo phụ huynh",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

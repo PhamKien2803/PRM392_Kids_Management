@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3F2FD"
+    android:background="#FFFFFF"
     android:padding="28dp"
     android:fitsSystemWindows="true">
 
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="✏️ Sửa thông tin lớp"
         android:textSize="26sp"
-        android:textColor="#0D47A1"
+        android:textColor="#7B1FA2"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginBottom="32dp"
@@ -49,10 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tên lớp hiện tại"
-                android:backgroundTint="#64B5F6"
+                android:backgroundTint="#7B1FA2"
                 android:padding="16dp"
-                android:textColor="#263238"
-                android:textColorHint="#9E9E9E"
+                android:textColor="#424242"
+                android:textColorHint="#FF9800"
                 android:textSize="17sp"
                 android:layout_marginBottom="20dp" />
 
@@ -61,10 +60,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tên giáo viên phụ trách"
-                android:backgroundTint="#64B5F6"
+                android:backgroundTint="#7B1FA2"
                 android:padding="16dp"
-                android:textColor="#263238"
-                android:textColorHint="#9E9E9E"
+                android:textColor="#424242"
+                android:textColorHint="#FF9800"
                 android:textSize="17sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -75,7 +74,7 @@
         android:layout_height="wrap_content"
         android:text="Lưu thay đổi"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="#FF9800"
         android:padding="18dp"
         android:textSize="17sp"
         app:cornerRadius="12dp"
@@ -94,7 +93,7 @@
         android:layout_marginTop="16dp"
         android:text="Xóa lớp học"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#F44336"
+        android:backgroundTint="#7B1FA2"
         android:padding="18dp"
         android:textSize="17sp"
         app:cornerRadius="12dp"
@@ -111,7 +110,7 @@
         android:text="🔙 Quay lại"
         android:layout_marginTop="16dp"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="#424242"
         android:padding="18dp"
         android:textSize="17sp"
         app:cornerRadius="12dp"

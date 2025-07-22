@@ -1,16 +1,20 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DB.SqlDatabaseHelper;
 
@@ -27,29 +31,25 @@ public class TeacherStudentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_view_studentlist);
 
-        // Hiện nút back trên ActionBar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Danh sách học sinh");
         }
 
-        // Xử lý nút back dưới giao diện
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
 
-        // Lấy teacherId từ Intent
         teacherId = getIntent().getStringExtra("teacherId");
         Log.d("DEBUG", "Teacher ID nhận được: " + teacherId);
 
         if (teacherId == null) {
-            Toast.makeText(this, "Không tìm thấy mã giáo viên", Toast.LENGTH_LONG).show();
+            showNotification("Lỗi", "Không tìm thấy mã giáo viên");
             finish();
             return;
         }
 
         dbHelper = new SqlDatabaseHelper(this);
 
-        // Tải tên lớp và danh sách học sinh
         loadClassName();
         loadStudents();
     }
@@ -69,7 +69,7 @@ public class TeacherStudentListActivity extends AppCompatActivity {
             cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Lỗi khi tải tên lớp: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            showNotification("Lỗi", "Lỗi khi tải tên lớp: " + e.getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ public class TeacherStudentListActivity extends AppCompatActivity {
 
             ListView listViewStudents = findViewById(R.id.listViewStudents);
             if (listViewStudents == null) {
-                Toast.makeText(this, "Không tìm thấy ListView (listViewStudents)", Toast.LENGTH_LONG).show();
+                showNotification("Lỗi", "Không tìm thấy ListView (listViewStudents)");
                 return;
             }
 
@@ -105,7 +105,7 @@ public class TeacherStudentListActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Lỗi khi tải danh sách: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            showNotification("Lỗi", "Lỗi khi tải danh sách: " + e.getMessage());
         }
     }
 
@@ -113,5 +113,28 @@ public class TeacherStudentListActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "teacher_student_list_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo danh sách học sinh",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

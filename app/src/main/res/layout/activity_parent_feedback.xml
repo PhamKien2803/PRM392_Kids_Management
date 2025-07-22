@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF8E1"
+    android:background="#FFFFFF"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FF9800"
+        android:background="#7B1FA2"
         android:padding="12dp"
         android:layout_marginBottom="16dp">
 
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="👶 Thông tin bé"
-                    android:textColor="#FF6F00"
+                    android:textColor="#7B1FA2"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#E8F5E8"
+                    android:background="#FF9800"
                     android:padding="12dp"
                     android:layout_marginBottom="12dp">
 
@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="📅 Thứ Hai, 10/06/2025"
-                        android:textColor="#2E7D32"
+                        android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="4dp"/>
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👩‍🏫 Cô Mai"
-                        android:textColor="#2E7D32"
+                        android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textStyle="italic"/>
                 </LinearLayout>
@@ -139,7 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#FFF3E0"
+                    android:background="#7B1FA2"
                     android:padding="12dp"
                     android:layout_marginBottom="12dp">
 
@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="📅 Thứ Ba, 11/06/2025"
-                        android:textColor="#F57C00"
+                        android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="4dp"/>
@@ -156,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🎵 Hoạt động: Học hát và nhảy"
-                        android:textColor="#424242"
+                        android:textColor="#FFFFFF"
                         android:textSize="13sp"
                         android:layout_marginBottom="8dp"/>
 
@@ -164,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Bé Minh Anh hôm nay hát rất hay và nhớ lời bài hát nhanh. Tuy nhiên, bé còn hơi ngại ngùng khi nhảy theo nhóm. Cô khuyến khích bé tự tin hơn."
-                        android:textColor="#424242"
+                        android:textColor="#FFFFFF"
                         android:textSize="13sp"
                         android:layout_marginBottom="4dp"/>
 
@@ -172,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👩‍🏫 Cô Hương"
-                        android:textColor="#F57C00"
+                        android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textStyle="italic"/>
                 </LinearLayout>
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#E3F2FD"
+                    android:background="#424242"
                     android:padding="12dp"
                     android:layout_marginBottom="12dp">
 
@@ -189,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="📅 Thứ Tư, 12/06/2025"
-                        android:textColor="#1976D2"
+                        android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="4dp"/>
@@ -198,7 +198,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🧮 Hoạt động: Học đếm số"
-                        android:textColor="#424242"
+                        android:textColor="#FFFFFF"
                         android:textSize="13sp"
                         android:layout_marginBottom="8dp"/>
 
@@ -206,7 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Minh Anh đã học đếm từ 1 đến 10 rất tốt. Bé có thể nhận biết các con số và thực hiện phép cộng đơn giản. Bé rất chăm chỉ và tập trung."
-                        android:textColor="#424242"
+                        android:textColor="#FFFFFF"
                         android:textSize="13sp"
                         android:layout_marginBottom="4dp"/>
 
@@ -214,14 +214,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👩‍🏫 Cô Mai"
-                        android:textColor="#1976D2"
+                        android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textStyle="italic"/>
                 </LinearLayout>
-
-
-
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

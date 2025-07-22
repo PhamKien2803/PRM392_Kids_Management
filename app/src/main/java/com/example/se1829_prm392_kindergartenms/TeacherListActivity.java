@@ -1,17 +1,21 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View;
-import android.widget.Toast;
-import android.app.AlertDialog;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,22 +83,20 @@ public class TeacherListActivity extends AppCompatActivity {
                 Teacher t = teacherList.get(position);
                 holder.tvInfo.setText(t.getFullName() + " - " + t.getPhone());
 
-                // Nút sửa
                 holder.btnEdit.setOnClickListener(v -> {
                     Intent intent = new Intent(TeacherListActivity.this, EditTeacherActivity.class);
                     intent.putExtra("teacherId", t.getTeacherId());
                     startActivity(intent);
                 });
 
-                // Nút xóa với xác nhận
                 holder.btnDelete.setOnClickListener(v -> {
                     new AlertDialog.Builder(TeacherListActivity.this)
                             .setTitle("Xác nhận xóa")
                             .setMessage("Bạn có chắc chắn muốn xóa giáo viên này?")
                             .setPositiveButton("Xóa", (dialog, which) -> {
                                 teacherDao.delete(t.getTeacherId());
-                                loadTeachers(); // cập nhật danh sách
-                                Toast.makeText(TeacherListActivity.this, "Đã xóa giáo viên", Toast.LENGTH_SHORT).show();
+                                loadTeachers();
+                                showNotification("Thành công", "Đã xóa giáo viên");
                             })
                             .setNegativeButton("Hủy", null)
                             .show();
@@ -110,6 +112,29 @@ public class TeacherListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void showNotification(String title, String message) {
+        String channelId = "teacher_list_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo danh sách giáo viên",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+    }
+
     static class TeacherViewHolder extends RecyclerView.ViewHolder {
         TextView tvInfo;
         Button btnEdit, btnDelete;
@@ -122,4 +147,3 @@ public class TeacherListActivity extends AppCompatActivity {
         }
     }
 }
-
