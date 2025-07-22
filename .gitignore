@@ -1,15 +1,29 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Android Studio
+.idea/
+.gradle/
 local.properties
+/.DS_Store
+/build/
+
+# User-specific files
+*.log
+*.sublime-workspace
+*.sublime-project
+
+# Android specific files
+captures/
+*.apk
+*.ap_ 
+*.dex
+*.class
+*.jar
+*.keystore
+*.db
+
+# Gradle files
+.gradle/
+build/
+
+# OS-specific files
+Thumbs.db
+ehthumbs.db

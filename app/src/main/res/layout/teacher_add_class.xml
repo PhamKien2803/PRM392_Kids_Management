@@ -1,59 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#E3F2FD"
-    android:padding="24dp"
-    android:fitsSystemWindows="true">
+    android:background="#FFFFFF"> <!-- Đặt nền trắng -->
 
-    <TextView
+    <!-- Một LinearLayout duy nhất là con trực tiếp của ScrollView -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="➕ Thêm lớp mới"
-        android:textSize="20sp"
-        android:textColor="#0D47A1"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal"
+        android:background="#FFFFFF"> <!-- Cũng giữ nền trắng bên trong -->
 
-    <EditText
-        android:id="@+id/edtClassName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tên lớp (VD: Lá 1)"
-        android:backgroundTint="#2196F3"
-        android:padding="12dp"
-        android:textColor="#000000"
-        android:textColorHint="#9E9E9E"
-        android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🧩 TẠO LỚP HỌC MỚI"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#D500F9"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
 
-    <EditText
-        android:id="@+id/edtTeacher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tên giáo viên phụ trách"
-        android:backgroundTint="#2196F3"
-        android:padding="12dp"
-        android:textColor="#000000"
-        android:textColorHint="#9E9E9E"
-        android:layout_marginBottom="24dp"/>
+        <!-- Khối chứa input và spinner -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="20dp"
+            android:elevation="4dp"
+            android:layout_marginBottom="24dp"
+            android:clipToOutline="true">
 
-    <Button
-        android:id="@+id/btnAddClass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tạo lớp học"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#2196F3"/>
+            <EditText
+                android:id="@+id/edtClassName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tên lớp (VD: Lá 1A)"
+                android:backgroundTint="#FF5722"
+                android:padding="14dp"
+                android:textColor="#BF360C"
+                android:textColorHint="#FF8A65"
+                android:layout_marginBottom="20dp" />
 
-    <!-- Nút quay lại -->
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🔙 Quay lại"
-        android:layout_marginTop="12dp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#2196F3" />
-</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="👩‍🏫 Giáo viên phụ trách"
+                android:textSize="16sp"
+                android:textColor="#009688"
+                android:layout_marginBottom="8dp" />
+
+            <Spinner
+                android:id="@+id/spinnerTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:backgroundTint="#00BCD4"
+                android:padding="12dp" />
+        </LinearLayout>
+
+        <!-- Nút Tạo lớp -->
+        <Button
+            android:id="@+id/btnAddClass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="➕ TẠO LỚP MỚI"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50"
+            android:layout_marginBottom="12dp"
+            android:padding="14dp" />
+
+        <!-- Nút Quay lại -->
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⬅️ QUAY LẠI"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2196F3"
+            android:padding="14dp" />
+
+    </LinearLayout>
+</ScrollView>

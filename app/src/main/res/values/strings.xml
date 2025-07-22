@@ -1,11 +1,23 @@
 <resources>
-<!--    <string name="app_name">Sakura School</string>-->
-<!--    <string name="login_title">Đăng nhập Sakura School</string>-->
-<!--    <string name="welcome_message">Chào mừng trở lại!</string>-->
-<!--    <string name="username_hint">Tên đăng nhập hoặc Email</string>-->
-<!--    <string name="password_hint">Mật khẩu</string>-->
-<!--    <string name="login_button">Đăng nhập</string>-->
-<!--    <string name="forget_password">Quên mật khẩu?</string>-->
-<!--    <string name="no_account_prompt">Chưa có tài khoản?</string>-->
-<!--    <string name="sign_up_prompt">Đăng ký ngay</string>-->
+    <string name="app_name">SE1828-PRM392-KindergartenMS</string>
+
+    <string name="title_class_list">Danh sách lớp học</string>
+    <string name="title_class_list_description">Tiêu đề: Danh sách các lớp học hiện có</string>
+
+    <string name="header_stt">STT</string>
+    <string name="header_class_name">Tên lớp</string>
+    <string name="header_teacher">Giáo viên</string>
+    <string name="header_actions">Thao tác</string>
+
+    <string name="button_add_class">Thêm lớp mới</string>
+    <string name="add_teacher_button_text">👩‍🏫 Thêm giáo viên</string>
+    <string name="add_schedule_button_text">📅 Thêm lịch học</string>
+    <string name="button_logout">Đăng xuất</string>
+
+    <string name="button_view_detail">Xem</string>
+    <string name="button_edit_class">Sửa</string>
+
+    <string name="class_list_scroll_description">Cuộn để xem danh sách các lớp học</string>
+
+    <string name="teacher_short_name_format">Cô %s</string>
 </resources>
