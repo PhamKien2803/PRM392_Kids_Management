@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF8E1"
+    android:background="#FFFFFF"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF9800"
+        android:background="#7B1FA2"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
@@ -20,7 +20,7 @@
             app:title="🌸 Kidora"
             app:subtitle="Phụ huynh: Trần Văn A"
             app:titleTextColor="#FFFFFF"
-            app:subtitleTextColor="#FFF3E0"/>
+            app:subtitleTextColor="#FFFFFF"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👶 Thông tin bé"
-                        android:textColor="#FF6F00"
+                        android:textColor="#7B1FA2"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"/>
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="📅 Thời khóa biểu tuần"
-                        android:textColor="#FF6F00"
+                        android:textColor="#7B1FA2"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp"/>
@@ -124,7 +124,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="#E8F5E8">
+                app:cardBackgroundColor="#FF9800">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ghi chú quan trọng"
-                        android:textColor="#2E7D32"
+                        android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"/>
@@ -145,7 +145,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="• Thời khóa biểu có thể thay đổi đầu tuần\n• Hãy chuẩn bị đồ dùng học tập cho bé\n• Đưa đón bé đúng giờ: 7:00 - 17:00"
-                        android:textColor="#388E3C"
+                        android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:lineSpacingExtra="4dp"/>
                 </LinearLayout>
@@ -164,7 +164,7 @@
                     android:layout_weight="1"
                     android:text="Nhận xét"
                     android:textSize="14sp"
-                    android:backgroundTint="#4CAF50"
+                    android:backgroundTint="#7B1FA2"
                     android:textColor="#FFFFFF"
                     android:layout_marginEnd="8dp"
                     android:padding="12dp"/>
@@ -176,7 +176,7 @@
                     android:layout_weight="1"
                     android:text="Liên hệ"
                     android:textSize="14sp"
-                    android:backgroundTint="#2196F3"
+                    android:backgroundTint="#FF9800"
                     android:textColor="#FFFFFF"
                     android:layout_marginStart="8dp"
                     android:padding="12dp"/>
@@ -190,7 +190,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#FF5722"
+                android:backgroundTint="#424242"
                 android:layout_marginTop="8dp"
                 android:padding="16dp"/>
         </LinearLayout>

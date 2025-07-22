@@ -1,14 +1,17 @@
 package com.example.se1829_prm392_kindergartenms;
 
-
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.TeacherDao;
 import com.example.se1829_prm392_kindergartenms.Entity.Teacher;
@@ -25,7 +28,7 @@ public class AddTeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_teacher);
 
         Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(v -> finish()); // Quay lại màn hình trước
+        btnBack.setOnClickListener(v -> finish());
 
         Button btnViewTeachers = findViewById(R.id.btnViewTeachers);
         btnViewTeachers.setOnClickListener(v -> {
@@ -33,7 +36,6 @@ public class AddTeacherActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Ánh xạ view (bỏ edtTeacherId)
         edtFullName = findViewById(R.id.edtFullName);
         edtAddress = findViewById(R.id.edtAddress);
         edtPhone = findViewById(R.id.edtPhone);
@@ -52,20 +54,42 @@ public class AddTeacherActivity extends AppCompatActivity {
         String dob = edtDob.getText().toString().trim();
 
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(this, "Vui lòng nhập họ tên giáo viên", Toast.LENGTH_SHORT).show();
+            showNotification("Thiếu thông tin", "Vui lòng nhập họ tên giáo viên");
             return;
         }
 
-        // Tạo ID tự động
         String id = teacherDao.generateAutoTeacherId();
         Teacher teacher = new Teacher(id, name, address, phone, dob);
 
         long result = teacherDao.insert(teacher);
         if (result != -1) {
-            Toast.makeText(this, "Thêm giáo viên thành công! Mã: " + id, Toast.LENGTH_SHORT).show();
+            showNotification("Thành công", "Thêm giáo viên thành công! Mã: " + id);
             finish();
         } else {
-            Toast.makeText(this, "Thêm giáo viên thất bại", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Thêm giáo viên thất bại");
         }
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "teacher_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo giáo viên",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

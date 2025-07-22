@@ -1,15 +1,19 @@
 package com.example.se1829_prm392_kindergartenms;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.ScheduleDao;
 import com.example.se1829_prm392_kindergartenms.Entity.Schedule;
@@ -71,7 +75,7 @@ public class PrincipalAddSchedule extends AppCompatActivity {
             target.setText(String.format(Locale.getDefault(), "%02d/%02d/%d", d, m + 1, y));
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); // chặn ngày quá khứ
+        datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePicker.show();
     }
 
@@ -89,36 +93,34 @@ public class PrincipalAddSchedule extends AppCompatActivity {
         String timeEnd = edtTimeEnd.getText().toString();
 
         if (activity.isEmpty() || date.isEmpty() || timeStart.isEmpty() || timeEnd.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            showNotification("Thiếu thông tin", "Vui lòng nhập đầy đủ thông tin");
             return;
         }
 
-        // Validate ngày không quá khứ
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try {
             Date selectedDate = dateFormat.parse(date);
             Date today = dateFormat.parse(dateFormat.format(new Date()));
             if (selectedDate != null && selectedDate.before(today)) {
-                Toast.makeText(this, "⛔ Không được chọn ngày trong quá khứ", Toast.LENGTH_SHORT).show();
+                showNotification("Lỗi", "⛔ Không được chọn ngày trong quá khứ");
                 return;
             }
         } catch (ParseException e) {
-            Toast.makeText(this, "❌ Định dạng ngày không hợp lệ", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "❌ Định dạng ngày không hợp lệ");
             return;
         }
 
-        // Validate thời gian
         try {
             Date start = timeFormat.parse(timeStart);
             Date end = timeFormat.parse(timeEnd);
 
             if (start != null && end != null && !start.before(end)) {
-                Toast.makeText(this, "Giờ bắt đầu phải trước giờ kết thúc", Toast.LENGTH_SHORT).show();
+                showNotification("Lỗi", "Giờ bắt đầu phải trước giờ kết thúc");
                 return;
             }
 
         } catch (ParseException e) {
-            Toast.makeText(this, "Định dạng giờ không hợp lệ", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Định dạng giờ không hợp lệ");
             return;
         }
 
@@ -134,10 +136,33 @@ public class PrincipalAddSchedule extends AppCompatActivity {
         long result = scheduleDao.insert(schedule);
 
         if (result != -1) {
-            Toast.makeText(this, "Đã lưu lịch học thành công", Toast.LENGTH_SHORT).show();
+            showNotification("Thành công", "Đã lưu lịch học thành công");
             finish();
         } else {
-            Toast.makeText(this, "Lỗi khi lưu lịch học", Toast.LENGTH_SHORT).show();
+            showNotification("Lỗi", "Lỗi khi lưu lịch học");
         }
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "principal_add_schedule_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo lịch học",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

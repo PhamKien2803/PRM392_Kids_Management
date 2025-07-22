@@ -1,17 +1,21 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.ClassDao;
 import com.example.se1829_prm392_kindergartenms.DAO.ParentDao;
@@ -51,7 +55,7 @@ public class ParentHomeActivity extends AppCompatActivity {
 
         String parentId = getIntent().getStringExtra("parentId");
         if (parentId == null) {
-            Toast.makeText(this, "Không tìm thấy mã phụ huynh", Toast.LENGTH_LONG).show();
+            showNotification("Lỗi", "Không tìm thấy mã phụ huynh");
             finish();
             return;
         }
@@ -124,25 +128,42 @@ public class ParentHomeActivity extends AppCompatActivity {
         }
 
         btnLogout.setOnClickListener(view -> {
-            Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+            showNotification("Đăng xuất", "Đăng xuất thành công");
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
-        btnFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ParentHomeActivity.this, ParentFeedbackActivity.class);
-                intent.putExtra("parentId", parentId);
-                startActivity(intent);
-            }
+        btnFeedback.setOnClickListener(v -> {
+            Intent intent = new Intent(ParentHomeActivity.this, ParentFeedbackActivity.class);
+            intent.putExtra("parentId", parentId);
+            startActivity(intent);
         });
 
-        btnContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ParentHomeActivity.this, "Tính năng liên hệ đang phát triển", Toast.LENGTH_SHORT).show();
-            }
+        btnContact.setOnClickListener(v -> {
+            showNotification("Thông báo", "Tính năng liên hệ đang phát triển");
         });
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "parent_home_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo phụ huynh",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

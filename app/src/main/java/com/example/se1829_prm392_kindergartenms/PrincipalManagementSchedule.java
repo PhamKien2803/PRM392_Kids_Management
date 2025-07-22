@@ -2,7 +2,11 @@ package com.example.se1829_prm392_kindergartenms;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.ScheduleDao;
 import com.example.se1829_prm392_kindergartenms.Entity.Schedule;
@@ -59,7 +63,6 @@ public class PrincipalManagementSchedule extends AppCompatActivity {
                     + "  ⏰ " + schedule.getTimeStart() + " - " + schedule.getTimeEnd());
 
             btnUpdate.setOnClickListener(v -> showUpdateDialog(schedule));
-
             btnDelete.setOnClickListener(v -> confirmDelete(schedule));
 
             scheduleListContainer.addView(itemView);
@@ -78,24 +81,21 @@ public class PrincipalManagementSchedule extends AppCompatActivity {
         EditText edtEnd = view.findViewById(R.id.edtUpdateTimeEnd);
         Button btnSave = view.findViewById(R.id.btnUpdateConfirm);
 
-        // Gán dữ liệu cũ
         edtActivity.setText(schedule.getActivityName());
         edtDate.setText(schedule.getTimeDate());
         edtStart.setText(schedule.getTimeStart());
         edtEnd.setText(schedule.getTimeEnd());
 
-        // Mở DatePicker - ngăn chọn ngày quá khứ
         edtDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePicker = new DatePickerDialog(this, (view1, y, m, d) -> {
                 String formatted = String.format(Locale.getDefault(), "%02d/%02d/%d", d, m + 1, y);
                 edtDate.setText(formatted);
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000); // chặn ngày quá khứ
+            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePicker.show();
         });
 
-        // Mở TimePicker
         View.OnClickListener timePicker = v -> {
             EditText target = (EditText) v;
             Calendar cal = Calendar.getInstance();
@@ -117,40 +117,37 @@ public class PrincipalManagementSchedule extends AppCompatActivity {
             String end = edtEnd.getText().toString().trim();
 
             if (act.isEmpty() || date.isEmpty() || start.isEmpty() || end.isEmpty()) {
-                Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                showNotification("Thiếu thông tin", "Vui lòng điền đầy đủ thông tin");
                 return;
             }
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
-            // Validate ngày không quá khứ
             try {
                 Date selectedDate = dateFormat.parse(date);
                 Date today = dateFormat.parse(dateFormat.format(new Date()));
                 if (selectedDate != null && selectedDate.before(today)) {
-                    Toast.makeText(this, "⛔ Không được chọn ngày trong quá khứ", Toast.LENGTH_SHORT).show();
+                    showNotification("Lỗi", "⛔ Không được chọn ngày trong quá khứ");
                     return;
                 }
             } catch (ParseException e) {
-                Toast.makeText(this, "❌ Định dạng ngày không hợp lệ", Toast.LENGTH_SHORT).show();
+                showNotification("Lỗi", "❌ Định dạng ngày không hợp lệ");
                 return;
             }
 
-            // Validate giờ bắt đầu < giờ kết thúc
             try {
                 Date startTime = timeFormat.parse(start);
                 Date endTime = timeFormat.parse(end);
                 if (startTime != null && endTime != null && !startTime.before(endTime)) {
-                    Toast.makeText(this, "⛔ Giờ bắt đầu phải trước giờ kết thúc", Toast.LENGTH_SHORT).show();
+                    showNotification("Lỗi", "⛔ Giờ bắt đầu phải trước giờ kết thúc");
                     return;
                 }
             } catch (ParseException e) {
-                Toast.makeText(this, "❌ Định dạng giờ không hợp lệ", Toast.LENGTH_SHORT).show();
+                showNotification("Lỗi", "❌ Định dạng giờ không hợp lệ");
                 return;
             }
 
-            // Gán và cập nhật
             schedule.setActivityName(act);
             schedule.setTimeDate(date);
             schedule.setTimeStart(start);
@@ -158,18 +155,16 @@ public class PrincipalManagementSchedule extends AppCompatActivity {
 
             boolean updated = scheduleDao.update(schedule);
             if (updated) {
-                Toast.makeText(this, "✅ Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                showNotification("Thành công", "✅ Cập nhật thành công");
                 dialog.dismiss();
                 loadSchedules();
             } else {
-                Toast.makeText(this, "❌ Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                showNotification("Lỗi", "❌ Cập nhật thất bại");
             }
         });
 
         dialog.show();
     }
-
-
 
     private void confirmDelete(Schedule schedule) {
         new AlertDialog.Builder(this)
@@ -178,13 +173,36 @@ public class PrincipalManagementSchedule extends AppCompatActivity {
                 .setPositiveButton("Xoá", (dialog, which) -> {
                     boolean deleted = scheduleDao.delete(schedule.getScheduleId());
                     if (deleted) {
-                        Toast.makeText(this, "Đã xoá thành công", Toast.LENGTH_SHORT).show();
+                        showNotification("Thành công", "Đã xoá thành công");
                         loadSchedules();
                     } else {
-                        Toast.makeText(this, "Xoá thất bại", Toast.LENGTH_SHORT).show();
+                        showNotification("Lỗi", "Xoá thất bại");
                     }
                 })
                 .setNegativeButton("Huỷ", null)
                 .show();
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "principal_management_schedule_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo quản lý lịch học",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

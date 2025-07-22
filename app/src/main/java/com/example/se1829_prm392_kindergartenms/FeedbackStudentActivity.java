@@ -1,7 +1,11 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.FeedbackDao;
 import com.example.se1829_prm392_kindergartenms.DAO.ScheduleDao;
@@ -72,12 +77,10 @@ public class FeedbackStudentActivity extends AppCompatActivity {
     }
 
     private void checkScheduleAndLoad() {
-        students.clear(); // Xóa danh sách học sinh cũ trước khi tải mới
+        students.clear();
 
-        // Kiểm tra xem ngày được chọn có phải hôm nay không
         isToday = selectedDate.equals(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
-        // Kiểm tra xem có lịch học cho classId trong ngày đó không
         List<Schedule> schedules = scheduleDao.getSchedulesByClassId(classId);
         hasScheduleToday = false;
 
@@ -91,11 +94,10 @@ public class FeedbackStudentActivity extends AppCompatActivity {
         if (hasScheduleToday) {
             tvToday.setText(isToday ? "Feedback cho lớp hôm nay" : "Xem lại feedback lớp ngày " + selectedDate);
             lvStudentList.setVisibility(View.VISIBLE);
-            loadStudents(); // Tải danh sách học sinh và trạng thái feedback
+            loadStudents();
         } else {
             tvToday.setText(isToday ? "Hôm nay không có lịch học." : "Không có lịch học ngày " + selectedDate);
             lvStudentList.setVisibility(View.GONE);
-            // Nếu không có lịch học, xóa adapter để không hiển thị dữ liệu cũ
             if (lvStudentList.getAdapter() != null) {
                 ((StudentAdapter) lvStudentList.getAdapter()).notifyDataSetInvalidated();
             }
@@ -103,7 +105,7 @@ public class FeedbackStudentActivity extends AppCompatActivity {
     }
 
     private void loadStudents() {
-        students.clear(); // Xóa dữ liệu cũ trước khi tải lại
+        students.clear();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = null;
@@ -112,7 +114,7 @@ public class FeedbackStudentActivity extends AppCompatActivity {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(0);
                 String name = cursor.getString(1);
-                String history = getLatestFeedback(id); // Lấy feedback gần nhất để hiển thị lịch sử
+                String history = getLatestFeedback(id);
                 students.add(new StudentModel(id, name, history));
             }
         } finally {
@@ -121,7 +123,6 @@ public class FeedbackStudentActivity extends AppCompatActivity {
             }
         }
 
-        // Kiểm tra nếu adapter đã tồn tại để tái sử dụng, ngược lại tạo mới
         if (lvStudentList.getAdapter() == null) {
             StudentAdapter adapter = new StudentAdapter();
             lvStudentList.setAdapter(adapter);
@@ -144,7 +145,6 @@ public class FeedbackStudentActivity extends AppCompatActivity {
             if (cursor != null) {
                 cursor.close();
             }
-            // Không đóng db ở đây nếu nó được quản lý bởi SqlDatabaseHelper
         }
         return "Chưa có feedback nào.";
     }
@@ -191,27 +191,22 @@ public class FeedbackStudentActivity extends AppCompatActivity {
             tvName.setText(student.name);
             tvHistory.setText("Lịch sử gần nhất: " + student.lastFeedback);
 
-            // Kiểm tra xem đã có feedback cho học sinh này vào ngày được chọn chưa
             Feedback existingFeedbackForSelectedDate = feedbackDao.getFeedbackByStudentIdAndDate(student.id, selectedDate);
 
-            // Xác định xem có thể gửi/chỉnh sửa feedback hay không (chỉ hôm nay và có lịch)
             boolean canInteract = isToday && hasScheduleToday;
 
             if (existingFeedbackForSelectedDate != null) {
-                // Đã có feedback, hiển thị nội dung và cho phép chỉnh sửa
                 edtFeedback.setText(existingFeedbackForSelectedDate.getContent());
                 btnSubmit.setText("Cập nhật");
                 edtFeedback.setEnabled(canInteract);
-                btnSubmit.setVisibility(canInteract ? View.VISIBLE : View.GONE); // Chỉ hiện nút nếu là hôm nay và có lịch
+                btnSubmit.setVisibility(canInteract ? View.VISIBLE : View.GONE);
             } else {
-                // Chưa có feedback, cho phép gửi mới
                 edtFeedback.setText("");
                 btnSubmit.setText("Gửi");
-                edtFeedback.setEnabled(canInteract); // Chỉ cho nhập mới nếu là hôm nay và có lịch
-                btnSubmit.setVisibility(canInteract ? View.VISIBLE : View.GONE); // Chỉ hiện nút nếu là hôm nay và có lịch
+                edtFeedback.setEnabled(canInteract);
+                btnSubmit.setVisibility(canInteract ? View.VISIBLE : View.GONE);
             }
 
-            // Vô hiệu hóa EditText và Button nếu không phải hôm nay hoặc không có lịch học
             if (!canInteract) {
                 edtFeedback.setEnabled(false);
                 btnSubmit.setVisibility(View.GONE);
@@ -220,28 +215,24 @@ public class FeedbackStudentActivity extends AppCompatActivity {
             edtFeedback.setFocusableInTouchMode(canInteract);
             edtFeedback.setFocusable(canInteract);
 
-
             btnSubmit.setOnClickListener(view -> {
                 String content = edtFeedback.getText().toString().trim();
                 if (content.isEmpty()) {
-                    Toast.makeText(FeedbackStudentActivity.this, "Chưa nhập nội dung", Toast.LENGTH_SHORT).show();
+                    showNotification("Thiếu nội dung", "Chưa nhập nội dung");
                     return;
                 }
 
-                // Lấy lại feedback hiện có ngay trước khi submit để đảm bảo trạng thái mới nhất
                 Feedback currentFeedbackForSelectedDate = feedbackDao.getFeedbackByStudentIdAndDate(student.id, selectedDate);
                 boolean success;
 
                 if (currentFeedbackForSelectedDate != null) {
-                    // Đã có feedback, thực hiện cập nhật
                     success = feedbackDao.updateFeedback(currentFeedbackForSelectedDate.getFeedbackId(), content);
                     if (success) {
-                        Toast.makeText(FeedbackStudentActivity.this, "Đã cập nhật feedback", Toast.LENGTH_SHORT).show();
+                        showNotification("Thành công", "Đã cập nhật feedback");
                     } else {
-                        Toast.makeText(FeedbackStudentActivity.this, "Lỗi khi cập nhật feedback", Toast.LENGTH_SHORT).show();
+                        showNotification("Lỗi", "Lỗi khi cập nhật feedback");
                     }
                 } else {
-                    // Chưa có feedback, thực hiện thêm mới
                     Feedback feedback = new Feedback(
                             UUID.randomUUID().toString(),
                             teacherId,
@@ -252,9 +243,9 @@ public class FeedbackStudentActivity extends AppCompatActivity {
                     );
                     success = feedbackDao.insertFeedback(feedback);
                     if (success) {
-                        Toast.makeText(FeedbackStudentActivity.this, "Đã gửi feedback", Toast.LENGTH_SHORT).show();
+                        showNotification("Thành công", "Đã gửi feedback");
                     } else {
-                        Toast.makeText(FeedbackStudentActivity.this, "Lỗi khi gửi feedback", Toast.LENGTH_SHORT).show();
+                        showNotification("Lỗi", "Lỗi khi gửi feedback");
                     }
                 }
 
@@ -271,5 +262,28 @@ public class FeedbackStudentActivity extends AppCompatActivity {
 
             return convertView;
         }
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "feedback_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo feedback học sinh",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

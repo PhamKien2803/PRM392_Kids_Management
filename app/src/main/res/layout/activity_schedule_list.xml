@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#F1F8FF">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
             android:layout_marginBottom="12dp"
             android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_revert"
-            android:contentDescription="Quay lại" />
+            android:contentDescription="Quay lại"
+            app:tint="#7B1FA2" />
 
         <!-- Tiêu đề -->
         <TextView
@@ -27,7 +28,7 @@
             android:text="📋 Danh sách lịch học"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#0D47A1"
+            android:textColor="#7B1FA2"
             android:layout_marginBottom="16dp" />
 
         <!-- Container danh sách -->

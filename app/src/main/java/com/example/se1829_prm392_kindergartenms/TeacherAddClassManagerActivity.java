@@ -1,14 +1,18 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.se1829_prm392_kindergartenms.DAO.ClassDao;
 import com.example.se1829_prm392_kindergartenms.DAO.TeacherDao;
@@ -36,7 +40,6 @@ public class TeacherAddClassManagerActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> finish());
 
-        // Lấy danh sách giáo viên từ DB
         TeacherDao teacherDao = new TeacherDao(this);
         teacherList = teacherDao.getAll();
         List<String> teacherNames = new ArrayList<>();
@@ -51,30 +54,52 @@ public class TeacherAddClassManagerActivity extends AppCompatActivity {
             String className = edtClassName.getText().toString().trim();
             int selectedPosition = spinnerTeacher.getSelectedItemPosition();
             if (className.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập tên lớp!", Toast.LENGTH_SHORT).show();
+                showNotification("Thiếu thông tin", "Vui lòng nhập tên lớp!");
                 return;
             }
             if (teacherList == null || teacherList.isEmpty() || selectedPosition < 0) {
-                Toast.makeText(this, "Vui lòng chọn giáo viên!", Toast.LENGTH_SHORT).show();
+                showNotification("Thiếu thông tin", "Vui lòng chọn giáo viên!");
                 return;
             }
             Teacher selectedTeacher = teacherList.get(selectedPosition);
-            // Tạo đối tượng Class
             Class classroom = new Class();
             classroom.setClassId("CL" + System.currentTimeMillis());
             classroom.setClassName(className);
             classroom.setTeacherId(selectedTeacher);
             classroom.setScheduleId(null);
-            classroom.setSchoolYear("2024-2025"); // hoặc giá trị mặc định
+            classroom.setSchoolYear("2024-2025");
             ClassDao classDao = new ClassDao(this);
             long result = classDao.insert(classroom);
             if (result != -1) {
-                Toast.makeText(this, "Thêm lớp thành công!", Toast.LENGTH_SHORT).show();
+                showNotification("Thành công", "Thêm lớp thành công!");
                 Intent intent = new Intent(this, TeacherClassManagerActivity.class);
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "Thêm lớp thất bại!", Toast.LENGTH_SHORT).show();
+                showNotification("Lỗi", "Thêm lớp thất bại!");
             }
         });
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "teacher_add_class_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo thêm lớp",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }

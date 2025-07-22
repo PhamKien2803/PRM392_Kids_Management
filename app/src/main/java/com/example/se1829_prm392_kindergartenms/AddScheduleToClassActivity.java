@@ -1,11 +1,16 @@
 package com.example.se1829_prm392_kindergartenms;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import com.example.se1829_prm392_kindergartenms.DB.SqlDatabaseHelper;
 
 import java.util.*;
@@ -116,7 +121,7 @@ public class AddScheduleToClassActivity extends AppCompatActivity {
                     for (ScheduleModel existing : selectedSubjects) {
                         if (overlaps(selected, existing)) {
                             buttonView.setChecked(false);
-                            Toast.makeText(this, "Trùng giờ với: " + existing.activityName, Toast.LENGTH_SHORT).show();
+                            showNotification("Trùng giờ", "Trùng giờ với: " + existing.activityName);
                             return;
                         }
                     }
@@ -155,12 +160,12 @@ public class AddScheduleToClassActivity extends AppCompatActivity {
         }
 
         if (selectedClassIds.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn ít nhất một lớp học", Toast.LENGTH_SHORT).show();
+            showNotification("Thiếu thông tin", "Vui lòng chọn ít nhất một lớp học");
             return;
         }
 
         if (selectedSubjects.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn ít nhất một môn học", Toast.LENGTH_SHORT).show();
+            showNotification("Thiếu thông tin", "Vui lòng chọn ít nhất một môn học");
             return;
         }
 
@@ -172,7 +177,30 @@ public class AddScheduleToClassActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(this, "Đã lưu lịch học thành công", Toast.LENGTH_SHORT).show();
+        showNotification("Thành công", "Đã lưu lịch học thành công");
         finish();
+    }
+
+    private void showNotification(String title, String message) {
+        String channelId = "schedule_channel";
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Thông báo lịch học",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification) // Đảm bảo có icon này trong drawable
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }
